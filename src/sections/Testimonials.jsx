@@ -1,6 +1,6 @@
 import { testimonials } from "../constants";
 // src/sections/Testimonials.jsx
-// // import TitleHeader from '../components/TitleHeader'; // REMOVED - NOT NEEDED
+// // import TitleHeader from '../components/TitleHeader';
 
 const Testimonials = () => {
   return (
