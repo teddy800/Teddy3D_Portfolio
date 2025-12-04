@@ -1,6 +1,5 @@
 import { testimonials } from "../constants";
-// src/sections/Testimonials.jsx
-// // import TitleHeader from '../components/TitleHeader';
+import TitleHeader from '../components/TitleHeader';
 
 const Testimonials = () => {
   return (
