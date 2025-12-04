@@ -1,6 +1,6 @@
 import { testimonials } from "../constants";
 // src/sections/Testimonials.jsx
-import TitleHeader from "../components/TitleHeader";  // ← THIS IS CORRECTimport GlowCard from "../components/GlowCard";
+// // import TitleHeader from '../components/TitleHeader'; // REMOVED - NOT NEEDED
 
 const Testimonials = () => {
   return (
