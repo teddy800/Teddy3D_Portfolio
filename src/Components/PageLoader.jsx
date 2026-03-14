@@ -1,52 +1,79 @@
-import { useState, useEffect, memo } from "react";
+import { useState, useEffect, useRef, memo } from "react";
+
+const NAME = "Tewodiros";
+const SUBTITLE = "Full-Stack Developer";
+
+// Tiny floating particle
+const Particle = memo(({ style }) => (
+  <span className="loader-particle" style={style} aria-hidden="true" />
+));
+Particle.displayName = "Particle";
 
 const PageLoader = memo(({ onComplete }) => {
   const [progress, setProgress] = useState(0);
-  const [leaving, setLeaving] = useState(false);
+  const [leaving, setLeaving]   = useState(false);
+  const particles = useRef(
+    Array.from({ length: 18 }, (_, i) => ({
+      left:  `${Math.random() * 100}%`,
+      top:   `${Math.random() * 100}%`,
+      animationDelay: `${Math.random() * 3}s`,
+      animationDuration: `${2.5 + Math.random() * 3}s`,
+      width:  `${2 + Math.random() * 3}px`,
+      height: `${2 + Math.random() * 3}px`,
+      opacity: 0.15 + Math.random() * 0.35,
+    }))
+  );
 
   useEffect(() => {
-    // Simulate asset loading progress
-    const steps = [20, 45, 70, 88, 100];
+    const steps = [15, 35, 58, 78, 92, 100];
     let i = 0;
     const tick = () => {
       if (i < steps.length) {
-        setProgress(steps[i]);
-        i++;
-        setTimeout(tick, 300 + Math.random() * 200);
+        setProgress(steps[i++]);
+        setTimeout(tick, 280 + Math.random() * 180);
       } else {
         setTimeout(() => {
           setLeaving(true);
-          setTimeout(onComplete, 700);
-        }, 300);
+          setTimeout(onComplete, 650);
+        }, 250);
       }
     };
-    setTimeout(tick, 100);
+    setTimeout(tick, 80);
   }, [onComplete]);
 
   return (
-    <div className={`page-loader ${leaving ? "page-loader--leaving" : ""}`} aria-label="Loading">
+    <div
+      className={`page-loader ${leaving ? "page-loader--leaving" : ""}`}
+      aria-label="Loading portfolio"
+      role="status"
+    >
+      {/* Ambient particles */}
+      {particles.current.map((p, i) => (
+        <Particle key={i} style={p} />
+      ))}
+
+      {/* Radial glow */}
+      <div className="loader-glow" aria-hidden="true" />
+
       <div className="page-loader__content">
-        {/* Animated logo / name */}
-        <div className="page-loader__name">
-          <span className="page-loader__letter" style={{ animationDelay: "0ms" }}>T</span>
-          <span className="page-loader__letter" style={{ animationDelay: "60ms" }}>e</span>
-          <span className="page-loader__letter" style={{ animationDelay: "120ms" }}>w</span>
-          <span className="page-loader__letter" style={{ animationDelay: "180ms" }}>o</span>
-          <span className="page-loader__letter" style={{ animationDelay: "240ms" }}>d</span>
-          <span className="page-loader__letter" style={{ animationDelay: "300ms" }}>i</span>
-          <span className="page-loader__letter" style={{ animationDelay: "360ms" }}>r</span>
-          <span className="page-loader__letter" style={{ animationDelay: "420ms" }}>o</span>
-          <span className="page-loader__letter" style={{ animationDelay: "480ms" }}>s</span>
+        {/* Animated name */}
+        <div className="page-loader__name" aria-label={NAME}>
+          {NAME.split("").map((ch, i) => (
+            <span
+              key={i}
+              className="page-loader__letter"
+              style={{ animationDelay: `${i * 55}ms` }}
+            >
+              {ch}
+            </span>
+          ))}
         </div>
 
-        <p className="page-loader__subtitle">Full-Stack Developer</p>
+        <p className="page-loader__subtitle">{SUBTITLE}</p>
 
         {/* Progress bar */}
-        <div className="page-loader__bar-track">
-          <div
-            className="page-loader__bar-fill"
-            style={{ width: `${progress}%` }}
-          />
+        <div className="page-loader__bar-track" role="progressbar" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>
+          <div className="page-loader__bar-fill" style={{ width: `${progress}%` }} />
         </div>
 
         <p className="page-loader__percent">{progress}%</p>
