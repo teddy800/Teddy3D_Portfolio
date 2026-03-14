@@ -3,8 +3,7 @@ import emailjs from "@emailjs/browser";
 
 import TitleHeader from "../components/TitleHeader";
 import { useInView } from "../hooks/useInView";
-
-// Lazy-load the heavy 3D canvas — only mounts when contact section scrolls into view
+import { useToast } from "../Components/ToastNotification";
 import ContactExperience from "../components/models/contact/ContactExperience";
 
 const Contact = memo(() => {
@@ -12,6 +11,7 @@ const Contact = memo(() => {
   const [canvasRef, canvasInView] = useInView({ rootMargin: "400px" });
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const addToast = useToast();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,8 +29,10 @@ const Contact = memo(() => {
         import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
       );
       setForm({ name: "", email: "", message: "" });
+      addToast("Message sent! I'll get back to you soon 🚀", "success");
     } catch (error) {
       console.error("EmailJS Error:", error);
+      addToast("Something went wrong. Please try again.", "error");
     } finally {
       setLoading(false);
     }
