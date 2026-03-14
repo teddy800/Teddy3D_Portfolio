@@ -1,41 +1,41 @@
-import { useRef } from "react";
+import { useRef, memo } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/all";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import { counterItems } from "../constants";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const AnimatedCounter = () => {
+const AnimatedCounter = memo(() => {
   const counterRef = useRef(null);
   const countersRef = useRef([]);
 
   useGSAP(() => {
     countersRef.current.forEach((counter, index) => {
+      if (!counter) return;
       const numberElement = counter.querySelector(".counter-number");
       const item = counterItems[index];
 
-      // Set initial value to 0
       gsap.set(numberElement, { innerText: "0" });
 
-      // Create the counting animation
       gsap.to(numberElement, {
         innerText: item.value,
         duration: 2.5,
         ease: "power2.out",
-        snap: { innerText: 1 }, // Ensures whole numbers
+        snap: { innerText: 1 },
         scrollTrigger: {
           trigger: "#counter",
           start: "top center",
+          // once — don't re-trigger on scroll back
+          once: true,
         },
-        // Add the suffix after counting is complete
         onComplete: () => {
           numberElement.textContent = `${item.value}${item.suffix}`;
         },
       });
-    }, counterRef);
-  }, []);
+    });
+  }, { scope: counterRef, dependencies: [] });
 
   return (
     <div id="counter" ref={counterRef} className="mt-32 padding-x-lg xl:mt-0">
@@ -47,7 +47,7 @@ const AnimatedCounter = () => {
             className="flex flex-col justify-center p-10 rounded-lg bg-zinc-900"
           >
             <div className="mb-2 text-5xl font-bold counter-number text-white-50">
-              0 {item.suffix}
+              0{item.suffix}
             </div>
             <div className="text-lg text-white-50">{item.label}</div>
           </div>
@@ -55,6 +55,7 @@ const AnimatedCounter = () => {
       </div>
     </div>
   );
-};
+});
 
+AnimatedCounter.displayName = "AnimatedCounter";
 export default AnimatedCounter;

@@ -1,13 +1,13 @@
 /* src/App.css - Hyper-Advanced Cosmic Styling: 400+ Lines of Responsive, Themed Magic! */
 /* Reset & Base: Enterprise-Grade */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: auto; } /* Lenis handles smooth scroll */
 body { 
   font-family: 'Inter', sans-serif; 
   line-height: 1.6; 
   color: #fff; 
   overflow-x: hidden; 
-  transition: all 0.3s ease; 
+  /* Removed: transition: all 0.3s ease — causes full-page repaints on every state change */
 }
 body.dark { background: linear-gradient(135deg, #0c0c0c, #1a1a2e); }
 body:not(.dark) { 

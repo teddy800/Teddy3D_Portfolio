@@ -19,12 +19,15 @@ body {
   overflow-x: hidden;
   background-color: black;
   color: white;
-  scroll-behavior: smooth;
+  /* Lenis handles smooth scroll — native scroll-behavior conflicts with it */
+  scroll-behavior: auto;
   font-family: "Mona Sans", sans-serif;
 }
 
 section {
   width: 100dvw;
+  /* Isolate layout recalculations per section */
+  contain: layout style;
 }
 
 @theme {
@@ -434,6 +437,9 @@ section {
   z-index: 40;
   overflow: hidden;
   transition: border-color 1s ease-in-out;
+  /* Promote to own GPU layer — prevents repaint on siblings */
+  will-change: transform;
+  contain: layout style;
 }
 
 .card::before {
@@ -458,7 +464,8 @@ section {
   mask-composite: intersect;
   mask-clip: padding-box, border-box;
   opacity: 0;
-  transition: 0.5s ease;
+  transition: opacity 0.5s ease;
+  will-change: opacity;
 }
 
 .glow {
@@ -469,10 +476,22 @@ section {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  filter: blur(10px);
-  filter: saturate(200);
+  filter: saturate(200) blur(10px);
+  will-change: filter;
 }
 
 .card:hover::before {
   opacity: 1;
+}
+
+/* GPU-accelerated animated elements */
+.tech-card-animated-bg,
+.wrapper,
+.marquee-box {
+  will-change: transform;
+}
+
+.hero-3d-layout canvas,
+.tech-icon-wrapper canvas {
+  will-change: transform;
 }
