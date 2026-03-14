@@ -4,7 +4,20 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/images/T.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tewodiros Fikadu &mdash;&mdash; Portfolio</title>
+    <title>Tewodiros Fikadu &mdash; Portfolio</title>
+
+    <!-- Preconnect to Google Fonts CDN — eliminates DNS lookup delay -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Preload the hero 3D model — it's the first thing rendered -->
+    <link rel="preload" href="/models/optimized-room.glb" as="fetch" crossorigin />
+
+    <!-- Preload hero background image — above the fold -->
+    <link rel="preload" href="/images/bg.png" as="image" />
+
+    <!-- DNS prefetch for EmailJS -->
+    <link rel="dns-prefetch" href="https://api.emailjs.com" />
   </head>
   <body>
     <div id="root"></div>
