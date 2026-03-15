@@ -5,21 +5,20 @@ const NavBar = memo(() => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const handleScroll = useCallback(() => {
-    setScrolled(window.scrollY > 10);
-  }, []);
-
   useEffect(() => {
     let ticking = false;
     const onScroll = () => {
       if (!ticking) {
-        requestAnimationFrame(() => { handleScroll(); ticking = false; });
+        requestAnimationFrame(() => { 
+          setScrolled(window.scrollY > 10);
+          ticking = false; 
+        });
         ticking = true;
       }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [handleScroll]);
+  }, []);
 
   // Close menu on route change / outside click
   useEffect(() => {

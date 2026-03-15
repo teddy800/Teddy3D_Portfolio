@@ -40,7 +40,16 @@ const TechIconCardExperience = memo(({ model }) => {
     <Canvas
       dpr={[1, 1.5]}
       frameloop="demand"
-      gl={{ antialias: true, powerPreference: "high-performance" }}
+      gl={{ 
+        antialias: true, 
+        powerPreference: "high-performance",
+        alpha: true,
+        stencil: false,
+        depth: true
+      }}
+      onCreated={(state) => {
+        state.gl.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+      }}
     >
       <TechScene model={model} />
     </Canvas>

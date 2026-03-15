@@ -20,6 +20,15 @@ const Contact = memo(() => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validate environment variables
+    if (!import.meta.env.VITE_APP_EMAILJS_SERVICE_ID || 
+        !import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID || 
+        !import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY) {
+      addToast("Email service not configured. Please try again later.", "error");
+      return;
+    }
+
     setLoading(true);
     try {
       await emailjs.sendForm(
@@ -32,7 +41,8 @@ const Contact = memo(() => {
       addToast("Message sent! I'll get back to you soon 🚀", "success");
     } catch (error) {
       console.error("EmailJS Error:", error);
-      addToast("Something went wrong. Please try again.", "error");
+      const errorMsg = error.text || "Something went wrong. Please try again.";
+      addToast(errorMsg, "error");
     } finally {
       setLoading(false);
     }

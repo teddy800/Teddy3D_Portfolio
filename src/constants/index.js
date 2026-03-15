@@ -117,32 +117,15 @@ const abilities = [
 ];
 
 const techStackImgs = [
-// { name: "JavaScript Architect", imgPath: "/images/logos/javascript.png" },
   { name: "Next.js 15 + AI", imgPath: "/images/logos/nextjs-black.png" },
   { name: "Full-Stack AI Engineer", imgPath: "/images/logos/ai-brain.png" },
   { name: "React Native Master", imgPath: "/images/logos/react-native.png" },
   { name: "Figma → Code Master", imgPath: "/images/logos/figma.png" },
-  {
-    name: "React Developer",
-    imgPath: "/images/logos/react.png",
-  },
-  
-  {
-    name: "Python Developer",
-    imgPath: "/images/logos/python.svg",
-  },
-  {
-    name: "Backend Developer",
-    imgPath: "/images/logos/node.png",
-  },
-  {
-    name: "3D Three.js Interactive Developer",
-    imgPath: "/images/logos/three.png",
-  },
-  {
-    name: "Git Project Manager",
-    imgPath: "/images/logos/git.svg",
-  },
+  { name: "React Developer", imgPath: "/images/react.png" },
+  { name: "Python Developer", imgPath: "/images/python.svg" },
+  { name: "Backend Developer", imgPath: "/images/node.png" },
+  { name: "3D Three.js Interactive Developer", imgPath: "/images/three.png" },
+  { name: "Git Project Manager", imgPath: "/images/git.svg" },
 ];
 
 const techStackIcons = [
@@ -313,20 +296,18 @@ const testimonials = [
 
 const socialImgs = [
   {
-  name: "github",
-  imgPath: "/images/github.png",
-  link: "https://github.com/teddy800"
-},
-{
-  name: "gmail",
-  imgPath: "/images/gmail.png",
-},
-
+    name: "github",
+    imgPath: "/images/github.png",
+    link: "https://github.com/teddy800"
+  },
+  {
+    name: "gmail",
+    imgPath: "/images/gmail.png",
+  },
   {
     name: "insta",
     imgPath: "/images/instagram.jpg",
   },
-
   {
     name: "whatsapp",
     imgPath: "/images/whatsapp.jpg",

@@ -34,8 +34,6 @@ section {
 /* This is the single biggest CSS performance win for long pages */
 section:not(#hero) {
   content-visibility: auto;
-  /* Hint the browser about approximate section height to prevent layout shift */
-  contain-intrinsic-size: 0 600px;
 }
 
 /* Lazy-loaded images — prevent layout shift and enable GPU decode */

@@ -4,8 +4,6 @@ import { useState, useEffect, useRef } from "react";
 export function useInView(options = {}) {
   const ref = useRef(null);
   const [inView, setInView] = useState(false);
-  // Stringify options so the effect only re-runs when values actually change
-  const optionsKey = JSON.stringify(options);
 
   useEffect(() => {
     const el = ref.current;
@@ -15,7 +13,6 @@ export function useInView(options = {}) {
       ([entry]) => {
         if (entry.isIntersecting) {
           setInView(true);
-          // Once visible, stop observing — no need to watch anymore
           observer.unobserve(el);
         }
       },
@@ -23,9 +20,11 @@ export function useInView(options = {}) {
     );
 
     observer.observe(el);
-    return () => observer.disconnect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [optionsKey]);
+    return () => {
+      observer.unobserve(el);
+      observer.disconnect();
+    };
+  }, []);
 
   return [ref, inView];
 }
