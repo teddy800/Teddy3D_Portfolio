@@ -3,21 +3,40 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/images/T.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Tewodiros Fikadu - Full-stack developer building production-grade digital experiences" />
     <title>Tewodiros Fikadu &mdash; Portfolio</title>
 
-    <!-- Preconnect to Google Fonts CDN — eliminates DNS lookup delay -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <!-- Critical CSS inline for faster first paint -->
+    <style>
+      html, body { margin: 0; padding: 0; width: 100%; height: 100%; }
+      body { background: #000; color: #fff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      #root { width: 100%; height: 100%; }
+      .app-content { opacity: 0; transition: opacity 0.8s ease; animation: appContentSafety 0s 4s forwards; }
+      @keyframes appContentSafety { to { opacity: 1; } }
+      .app-content--visible { opacity: 1; animation: none; }
+    </style>
+
+    <!-- Preconnect to critical resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://api.emailjs.com" crossorigin />
 
-    <!-- Preload the hero 3D model — it's the first thing rendered -->
+    <!-- DNS prefetch for external APIs -->
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+
+    <!-- Preload critical assets -->
     <link rel="preload" href="/models/optimized-room.glb" as="fetch" crossorigin />
-
-    <!-- Preload hero background image — above the fold -->
     <link rel="preload" href="/images/bg.png" as="image" />
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" as="style" />
 
-    <!-- DNS prefetch for EmailJS -->
-    <link rel="dns-prefetch" href="https://api.emailjs.com" />
+    <!-- Prefetch likely next pages/resources -->
+    <link rel="prefetch" href="/models/react_logo-transformed.glb" />
+    <link rel="prefetch" href="/models/python-transformed.glb" />
+
+    <!-- Resource hints for performance -->
+    <link rel="prerender" href="/" />
   </head>
   <body>
     <div id="root"></div>

@@ -19,20 +19,17 @@ body {
   overflow-x: hidden;
   background-color: black;
   color: white;
-  /* Lenis handles smooth scroll — native scroll-behavior conflicts with it */
   scroll-behavior: auto;
-  font-family: "Mona Sans", sans-serif;
+  font-family: "Mona Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  line-height: 1.5;
 }
 
 section {
   width: 100dvw;
-  /* Isolate layout recalculations per section */
-  contain: layout style;
-}
-
-/* content-visibility: auto — browser skips rendering off-screen sections entirely */
-/* This is the single biggest CSS performance win for long pages */
-section:not(#hero) {
+  contain: layout style paint;
   content-visibility: auto;
 }
 
@@ -389,6 +386,17 @@ img {
   }
 }
 
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Hero Text slider ends */
 
 .gradient-line {
@@ -507,11 +515,23 @@ img {
 .wrapper,
 .marquee-box {
   will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 .hero-3d-layout canvas,
 .tech-icon-wrapper canvas {
   will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Optimize animations with transform instead of position */
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    scroll-behavior: smooth;
+  }
 }
 
 /* ============================================================

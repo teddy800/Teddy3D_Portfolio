@@ -1,7 +1,7 @@
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import gsap from "gsap";
-import { memo, Suspense } from "react";
+import { memo, Suspense, useMemo } from "react";
 
 import TitleHeader from "../Components/TitleHeader";
 import TechIconCardExperience from "../Components/models/tech_logos/TechIconCardExperience";
@@ -10,20 +10,22 @@ import { useInView } from "../hooks/useInView";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Lightweight placeholder shown before 3D canvas mounts
 const CardPlaceholder = () => (
   <div className="w-52 h-60 flex items-center justify-center">
     <div className="w-12 h-12 rounded-full border-2 border-white/20 border-t-white/80 animate-spin" />
   </div>
 );
 
-const TechCard = memo(({ techStackIcon }) => {
+const TechCard = memo(({ techStackIcon, index }) => {
   const [ref, inView] = useInView({ rootMargin: "300px" });
 
   return (
     <div
       ref={ref}
       className="card-border tech-card overflow-hidden group xl:rounded-full rounded-lg"
+      style={{
+        animation: inView ? `fadeInUp 0.6s ease-out ${index * 0.1}s both` : "none",
+      }}
     >
       <div className="tech-card-animated-bg" />
       <div className="tech-card-content">
@@ -47,6 +49,12 @@ const TechCard = memo(({ techStackIcon }) => {
 TechCard.displayName = "TechCard";
 
 const TechStack = memo(() => {
+  // Memoize cards to prevent unnecessary re-renders
+  const memoizedCards = useMemo(
+    () => techStackIcons.map((icon, idx) => ({ ...icon, id: `${icon.name}-${idx}` })),
+    []
+  );
+
   useGSAP(() => {
     gsap.fromTo(
       ".tech-card",
@@ -54,9 +62,9 @@ const TechStack = memo(() => {
       {
         y: 0,
         opacity: 1,
-        duration: 1,
+        duration: 0.8,
         ease: "power2.inOut",
-        stagger: 0.15,
+        stagger: 0.08,
         scrollTrigger: {
           trigger: "#skills",
           start: "top center",
@@ -75,8 +83,8 @@ const TechStack = memo(() => {
           sub="🤝 What I Bring to the Table"
         />
         <div className="tech-grid">
-          {techStackIcons.map((techStackIcon) => (
-            <TechCard key={techStackIcon.name} techStackIcon={techStackIcon} />
+          {memoizedCards.map((techStackIcon, idx) => (
+            <TechCard key={techStackIcon.id} techStackIcon={techStackIcon} index={idx} />
           ))}
         </div>
       </div>
