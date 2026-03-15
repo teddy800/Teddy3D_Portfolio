@@ -2,9 +2,9 @@ import { memo } from "react";
 import { logoIconsList } from "../constants";
 import { useInView } from "../hooks/useInView";
 
-const LogoIcon = memo(({ icon }) => (
+const LogoIcon = memo(({ icon, index }) => (
   <div className="flex-none flex-center marquee-item">
-    <img src={icon.imgPath} alt={icon.name} loading="lazy" decoding="async" />
+    <img src={icon.imgPath} alt={`company logo ${index + 1}`} loading="lazy" decoding="async" />
   </div>
 ));
 
@@ -24,10 +24,10 @@ const LogoShowcase = memo(() => {
           style={{ animationPlayState: inView ? "running" : "paused" }}
         >
           {logoIconsList.map((icon, index) => (
-            <LogoIcon key={`a-${index}`} icon={icon} />
+            <LogoIcon key={`a-${index}`} icon={icon} index={index} />
           ))}
           {logoIconsList.map((icon, index) => (
-            <LogoIcon key={`b-${index}`} icon={icon} />
+            <LogoIcon key={`b-${index}`} icon={icon} index={index} />
           ))}
         </div>
       </div>

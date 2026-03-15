@@ -49,7 +49,8 @@ img {
   content-visibility: auto;
 }
 
-@theme {
+/* Tailwind v3 — define as plain CSS vars, NOT @theme (that's v4 only) */
+:root {
   --font-sans: "Mona Sans", sans-serif;
   --color-white-50: #d9ecff;
   --color-black-50: #1c1c21;
@@ -520,10 +521,16 @@ img {
    ============================================================ */
 .app-content {
   opacity: 0;
-  transition: opacity 0.6s ease;
+  transition: opacity 0.8s ease;
+  /* Safety: if loader never fires onComplete, still show content after 4s */
+  animation: appContentSafety 0s 4s forwards;
+}
+@keyframes appContentSafety {
+  to { opacity: 1; }
 }
 .app-content--visible {
   opacity: 1;
+  animation: none;
 }
 
 /* ============================================================

@@ -1,30 +1,30 @@
-import { useRef, useMemo } from "react";
+﻿import { useRef, useMemo, memo } from "react";
 import { useFrame } from "@react-three/fiber";
-import * as THREE from "three";
 
-const Particles = ({ count = 100 }) => {
+const Particles = memo(({ count = 100 }) => {
   const mesh = useRef();
 
-  // Pre-build a Float32Array once — no per-frame allocations
   const { positions, speeds } = useMemo(() => {
-    const positions = new Float32Array(count * 3);
-    const speeds = new Float32Array(count);
+    const pos = new Float32Array(count * 3);
+    const spd = new Float32Array(count);
     for (let i = 0; i < count; i++) {
-      positions[i * 3]     = (Math.random() - 0.5) * 10;
-      positions[i * 3 + 1] = Math.random() * 10 + 5;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
-      speeds[i] = 0.005 + Math.random() * 0.001;
+      pos[i * 3]     = (Math.random() - 0.5) * 10;
+      pos[i * 3 + 1] = Math.random() * 10 + 5;
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 10;
+      spd[i] = 0.005 + Math.random() * 0.01;
     }
-    return { positions, speeds };
+    return { positions: pos, speeds: spd };
   }, [count]);
 
-  useFrame(() => {
+  useFrame((state) => {
+    if (!mesh.current) return;
     const pos = mesh.current.geometry.attributes.position.array;
     for (let i = 0; i < count; i++) {
       pos[i * 3 + 1] -= speeds[i];
       if (pos[i * 3 + 1] < -2) pos[i * 3 + 1] = Math.random() * 10 + 5;
     }
     mesh.current.geometry.attributes.position.needsUpdate = true;
+    state.invalidate();
   });
 
   return (
@@ -47,6 +47,7 @@ const Particles = ({ count = 100 }) => {
       />
     </points>
   );
-};
+});
 
+Particles.displayName = "Particles";
 export default Particles;

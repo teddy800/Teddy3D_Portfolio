@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { testimonials } from "../constants";
-import TitleHeader from "../components/TitleHeader";
-import GlowCard from "../components/GlowCard";
+import TitleHeader from "../Components/TitleHeader";
+import GlowCard from "../Components/GlowCard";
 
 const TestimonialCard = memo(({ testimonial, index }) => (
   <GlowCard card={testimonial} index={index}>

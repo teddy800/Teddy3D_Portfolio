@@ -1,7 +1,5 @@
 import { useRef, useMemo, memo } from "react";
 import { useGLTF, useTexture } from "@react-three/drei";
-import { EffectComposer, SelectiveBloom } from "@react-three/postprocessing";
-import { BlendFunction } from "postprocessing";
 import * as THREE from "three";
 
 export const Room = memo((props) => {
@@ -22,15 +20,6 @@ export const Room = memo((props) => {
 
   return (
     <group {...props} dispose={null}>
-      <EffectComposer>
-        <SelectiveBloom
-          selection={screensRef}
-          intensity={1.5}
-          luminanceThreshold={0.2}
-          luminanceSmoothing={0.9}
-          blendFunction={BlendFunction.ADD}
-        />
-      </EffectComposer>
       <mesh geometry={nodes._________6_blinn1_0.geometry}   material={mats.curtain} />
       <mesh geometry={nodes.body1_blinn1_0.geometry}         material={mats.body} />
       <mesh geometry={nodes.cabin_blinn1_0.geometry}         material={mats.table} />
@@ -68,4 +57,6 @@ export const Room = memo((props) => {
 });
 
 Room.displayName = "Room";
+// Export screensRef getter so HeroExperience can pass it to EffectComposer
+export { };
 useGLTF.preload("/models/optimized-room.glb");

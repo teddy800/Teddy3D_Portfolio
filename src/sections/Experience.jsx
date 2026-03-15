@@ -1,14 +1,15 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { memo } from "react";
 
 import { expCards } from "../constants";
-import TitleHeader from "../components/TitleHeader";
-import GlowCard from "../components/GlowCard";
+import TitleHeader from "../Components/TitleHeader";
+import GlowCard from "../Components/GlowCard";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Experience = () => {
+const Experience = memo(() => {
   useGSAP(() => {
     gsap.utils.toArray(".timeline-card").forEach((card) => {
       gsap.from(card, {
@@ -114,6 +115,7 @@ const Experience = () => {
       </div>
     </section>
   );
-};
+});
 
+Experience.displayName = "Experience";
 export default Experience;

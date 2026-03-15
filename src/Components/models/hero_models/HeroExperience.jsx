@@ -2,6 +2,7 @@ import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { useMediaQuery } from "react-responsive";
 import { Suspense, memo } from "react";
+import { EffectComposer, Bloom } from "@react-three/postprocessing";
 
 import { Room } from "./Room";
 import HeroLights from "./HeroLights";
@@ -43,6 +44,16 @@ const HeroExperience = memo(() => {
         >
           <Room />
         </group>
+
+        {/* EffectComposer must be at scene level, not inside a group */}
+        <EffectComposer>
+          <Bloom
+            intensity={0.4}
+            luminanceThreshold={0.6}
+            luminanceSmoothing={0.9}
+            mipmapBlur
+          />
+        </EffectComposer>
       </Suspense>
     </Canvas>
   );

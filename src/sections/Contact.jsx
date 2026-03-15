@@ -1,10 +1,10 @@
 import { useRef, useState, Suspense, memo } from "react";
 import emailjs from "@emailjs/browser";
 
-import TitleHeader from "../components/TitleHeader";
+import TitleHeader from "../Components/TitleHeader";
 import { useInView } from "../hooks/useInView";
 import { useToast } from "../Components/ToastNotification";
-import ContactExperience from "../components/models/contact/ContactExperience";
+import ContactExperience from "../Components/models/contact/ContactExperience";
 
 const Contact = memo(() => {
   const formRef = useRef(null);

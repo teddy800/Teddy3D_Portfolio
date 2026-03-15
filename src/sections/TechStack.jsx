@@ -3,8 +3,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import gsap from "gsap";
 import { memo, Suspense } from "react";
 
-import TitleHeader from "../components/TitleHeader";
-import TechIconCardExperience from "../components/models/tech_logos/TechIconCardExperience";
+import TitleHeader from "../Components/TitleHeader";
+import TechIconCardExperience from "../Components/models/tech_logos/TechIconCardExperience";
 import { techStackIcons } from "../constants";
 import { useInView } from "../hooks/useInView";
 
