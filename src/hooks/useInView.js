@@ -16,7 +16,7 @@ export function useInView(options = {}) {
           observer.unobserve(el);
         }
       },
-      { threshold: 0.1, rootMargin: "200px", ...options }
+      { threshold: 0.05, rootMargin: "300px", ...options }
     );
 
     observer.observe(el);

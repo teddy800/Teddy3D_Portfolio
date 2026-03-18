@@ -522,6 +522,11 @@ img[loading="lazy"] {
 
 /* scroll-behavior: smooth intentionally removed — Lenis handles smooth scroll */
 
+/* Sections — contain paint to avoid full-page repaints */
+section {
+  contain: layout style;
+}
+
 /* ============================================================
    PAGE LOADER
    ============================================================ */

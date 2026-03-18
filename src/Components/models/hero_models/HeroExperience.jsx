@@ -20,14 +20,14 @@ const HeroExperience = memo(() => {
 
   // Memoize GL config for optimal performance
   const glConfig = useMemo(() => ({
-    antialias: true,
+    antialias: !isMobile,
     powerPreference: "high-performance",
     alpha: true,
     stencil: false,
     depth: true,
-    precision: "mediump",
+    precision: isMobile ? "lowp" : "mediump",
     logarithmicDepthBuffer: false,
-  }), []);
+  }), [isMobile]);
 
   return (
     <Canvas
@@ -37,7 +37,7 @@ const HeroExperience = memo(() => {
       gl={glConfig}
       performance={{ min: 0.5, max: 1 }}
       onCreated={(state) => {
-        state.gl.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+        state.gl.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1 : 1.5));
         state.gl.setClearColor(0x000000, 0);
       }}
     >

@@ -15,6 +15,8 @@ export default defineConfig({
   build: {
     target: 'esnext',
     minify: 'terser',
+    modulePreload: { polyfill: true },
+    cssTarget: 'chrome80',
     terserOptions: {
       compress: {
         drop_console: true,
