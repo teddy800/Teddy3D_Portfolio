@@ -15,7 +15,8 @@
 
 html,
 body {
-  width: 100dvw;
+  width: 100%;
+  max-width: 100%;
   overflow-x: hidden;
   background-color: black;
   color: white;
@@ -28,9 +29,7 @@ body {
 }
 
 section {
-  width: 100dvw;
-  contain: layout style paint;
-  content-visibility: auto;
+  width: 100%;
 }
 
 /* Lazy-loaded images — prevent layout shift and enable GPU decode */
@@ -431,7 +430,7 @@ img {
 
 /* marquee */
 .marquee {
-  width: 100dvw;
+  width: 100%;
   overflow: hidden;
   position: relative;
 }

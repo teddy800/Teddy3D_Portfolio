@@ -22,8 +22,13 @@ const Hero = memo(() => {
   return (
     <section id="hero" className="relative overflow-hidden">
       {/* Background */}
-      <div className="absolute top-0 left-0 z-10 pointer-events-none">
-        <img src="/images/bg.png" alt="" aria-hidden="true" />
+      <div className="absolute top-0 left-0 z-10 pointer-events-none w-full h-full">
+        <img 
+          src="/images/bg.png" 
+          alt="" 
+          aria-hidden="true"
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        />
       </div>
 
       <div className="hero-layout">

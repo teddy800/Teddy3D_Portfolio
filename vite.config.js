@@ -34,7 +34,7 @@ export default defineConfig({
         comments: false,
       },
     },
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 1500,
     cssCodeSplit: true,
     cssMinify: 'lightningcss',
     sourcemap: false,
@@ -42,15 +42,31 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: (id) => {
-          if (id.includes('node_modules')) {
-            if (id.includes('react') && !id.includes('three')) return 'vendor-react'
-            if (id.includes('three') || id.includes('@react-three')) return 'vendor-three'
-            if (id.includes('gsap')) return 'vendor-gsap'
-            if (id.includes('framer-motion')) return 'vendor-framer'
-            if (id.includes('lenis')) return 'vendor-lenis'
-            if (id.includes('emailjs')) return 'vendor-email'
-            return 'vendor-common'
-          }
+          if (!id.includes('node_modules')) return
+
+          // GSAP — fully independent, no react/three deps
+          if (id.includes('/gsap/')) return 'vendor-gsap'
+
+          // Framer Motion — independent
+          if (id.includes('/framer-motion/')) return 'vendor-framer'
+
+          // Lenis — independent
+          if (id.includes('/lenis/')) return 'vendor-lenis'
+
+          // Three.js + entire R3F ecosystem in ONE chunk to avoid cross-refs
+          if (
+            id.includes('/three/') ||
+            id.includes('/@react-three/') ||
+            id.includes('/postprocessing/') ||
+            id.includes('/react-responsive/')
+          ) return 'vendor-three'
+
+          // React core
+          if (
+            id.includes('/react/') ||
+            id.includes('/react-dom/') ||
+            id.includes('/scheduler/')
+          ) return 'vendor-react'
         },
         entryFileNames: 'js/[name]-[hash].js',
         chunkFileNames: 'js/[name]-[hash].js',

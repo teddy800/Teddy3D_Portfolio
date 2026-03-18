@@ -33,7 +33,7 @@ const HeroExperience = memo(() => {
     <Canvas
       camera={cameraConfig}
       dpr={[1, isMobile ? 1 : 1.5]}
-      frameloop="demand"
+      frameloop="always"
       gl={glConfig}
       performance={{ min: 0.5, max: 1 }}
       onCreated={(state) => {

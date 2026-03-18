@@ -21,6 +21,27 @@ const Contact = memo(() => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    // Validate form fields
+    if (!form.name.trim()) {
+      addToast("Please enter your name", "error");
+      return;
+    }
+    if (!form.email.trim()) {
+      addToast("Please enter your email", "error");
+      return;
+    }
+    if (!form.message.trim()) {
+      addToast("Please enter a message", "error");
+      return;
+    }
+    
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(form.email)) {
+      addToast("Please enter a valid email address", "error");
+      return;
+    }
+    
     // Validate environment variables
     if (!import.meta.env.VITE_APP_EMAILJS_SERVICE_ID || 
         !import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID || 

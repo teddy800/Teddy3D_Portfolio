@@ -1,13 +1,11 @@
-import { lazy, Suspense, useState, useCallback, useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 
 import NavBar from "./Components/NavBar";
 import Hero from "./sections/Hero";
 import CursorTrail from "./Components/CursorTrail";
 import ScrollProgressBar from "./Components/ScrollProgressBar";
 import BackToTop from "./Components/BackToTop";
-import PageLoader from "./Components/PageLoader";
 import { ToastProvider } from "./Components/ToastNotification";
-import { registerServiceWorker, detectDeviceCapabilities, adaptiveLoad } from "./utils/performanceOptimizer";
 
 const ShowcaseSection = lazy(() => import("./sections/ShowcaseSection"));
 const LogoShowcase    = lazy(() => import("./sections/LogoShowcase"));
@@ -25,68 +23,48 @@ const SectionFallback = () => (
 );
 
 const App = () => {
-  const [loaded, setLoaded] = useState(false);
-  const handleLoaded = useCallback(() => setLoaded(true), []);
-
   useEffect(() => {
-    // Register service worker for offline support
-    registerServiceWorker();
-
-    // Detect device capabilities and adapt loading
-    const capabilities = detectDeviceCapabilities();
-    const config = adaptiveLoad(capabilities);
-    
-    // Store config in window for components to use
-    window.__ADAPTIVE_CONFIG__ = config;
-
-    // Prefetch critical models
-    if (config.enableWebGL) {
-      const link = document.createElement('link');
-      link.rel = 'prefetch';
-      link.href = '/models/optimized-room.glb';
-      document.head.appendChild(link);
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(() => {});
+      });
     }
   }, []);
 
   return (
     <ToastProvider>
-      {/* Cinematic page loader */}
-      {!loaded && <PageLoader onComplete={handleLoaded} />}
-
       {/* Global UI chrome */}
       <CursorTrail />
       <ScrollProgressBar />
       <BackToTop />
 
-      {/* Main content — hidden until loader completes */}
-      <div className={`app-content ${loaded ? "app-content--visible" : ""}`}>
-        <NavBar />
-        <Hero />
-        <Suspense fallback={<SectionFallback />}>
-          <ShowcaseSection />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <LogoShowcase />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <FeatureCards />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <Experience />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <TechStack />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <Testimonials />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <Contact />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
-          <Footer />
-        </Suspense>
-      </div>
+      <NavBar />
+      <Hero />
+      <Suspense fallback={<SectionFallback />}>
+        <ShowcaseSection />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <LogoShowcase />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <FeatureCards />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <Experience />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <TechStack />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <Testimonials />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <Contact />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <Footer />
+      </Suspense>
     </ToastProvider>
   );
 };
