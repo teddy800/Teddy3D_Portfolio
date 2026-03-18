@@ -32,15 +32,9 @@ section {
   width: 100%;
 }
 
-/* Lazy-loaded images — prevent layout shift and enable GPU decode */
+/* Lazy-loaded images — prevent layout shift */
 img[loading="lazy"] {
   image-rendering: auto;
-  will-change: auto;
-}
-
-/* Prevent invisible images from blocking paint */
-img {
-  content-visibility: auto;
 }
 
 /* Tailwind v3 — define as plain CSS vars, NOT @theme (that's v4 only) */
@@ -531,23 +525,6 @@ img {
   * {
     scroll-behavior: smooth;
   }
-}
-
-/* ============================================================
-   APP CONTENT FADE-IN (after loader)
-   ============================================================ */
-.app-content {
-  opacity: 0;
-  transition: opacity 0.8s ease;
-  /* Safety: if loader never fires onComplete, still show content after 4s */
-  animation: appContentSafety 0s 4s forwards;
-}
-@keyframes appContentSafety {
-  to { opacity: 1; }
-}
-.app-content--visible {
-  opacity: 1;
-  animation: none;
 }
 
 /* ============================================================
@@ -1078,15 +1055,9 @@ img {
   border-radius: 4px;
 }
 
-/* Smooth image load fade-in */
+/* Images always visible */
 img {
   transition: opacity 0.3s ease;
-}
-img[loading="lazy"] {
-  opacity: 0;
-}
-img[loading="lazy"].loaded,
-img:not([loading]) {
   opacity: 1;
 }
 
