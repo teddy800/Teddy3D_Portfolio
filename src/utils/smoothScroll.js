@@ -11,8 +11,7 @@ const lenis = new Lenis({
   easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
   smoothWheel: true,
   smoothTouch: false,
-  normalizeWheel: true,
-  wheelMultiplier: 0.85,
+  wheelMultiplier: 1,
   touchMultiplier: 1.5,
   infinite: false,
 })

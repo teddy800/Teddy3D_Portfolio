@@ -20,7 +20,7 @@ const Hero = memo(() => {
   });
 
   return (
-    <section id="hero" className="relative overflow-hidden">
+    <section id="hero" className="relative overflow-x-hidden">
       {/* Background */}
       <div className="absolute top-0 left-0 z-10 pointer-events-none w-full h-full">
         <img 

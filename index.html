@@ -10,12 +10,9 @@
 
     <!-- Critical CSS inline for faster first paint -->
     <style>
-      html, body { margin: 0; padding: 0; width: 100%; height: 100%; }
+      html, body { margin: 0; padding: 0; width: 100%; }
       body { background: #000; color: #fff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-      #root { width: 100%; height: 100%; }
-      .app-content { opacity: 0; transition: opacity 0.8s ease; animation: appContentSafety 0s 4s forwards; }
-      @keyframes appContentSafety { to { opacity: 1; } }
-      .app-content--visible { opacity: 1; animation: none; }
+      #root { width: 100%; }
     </style>
 
     <!-- Preconnect to critical resources -->

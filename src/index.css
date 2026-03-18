@@ -520,12 +520,7 @@ img[loading="lazy"] {
   backface-visibility: hidden;
 }
 
-/* Optimize animations with transform instead of position */
-@media (prefers-reduced-motion: no-preference) {
-  * {
-    scroll-behavior: smooth;
-  }
-}
+/* scroll-behavior: smooth intentionally removed — Lenis handles smooth scroll */
 
 /* ============================================================
    PAGE LOADER
