@@ -16,24 +16,20 @@
     </style>
 
     <!-- Preconnect to critical resources -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://api.emailjs.com" crossorigin />
 
-    <!-- DNS prefetch for external APIs -->
-    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+    <!-- Preload critical fonts for instant text rendering -->
+    <link rel="preload" href="/fonts/inter-v12-latin-regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-v12-latin-700.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/fira-code-v21-latin-regular.woff2" as="font" type="font/woff2" crossorigin />
 
     <!-- Preload critical assets -->
-    <link rel="preload" href="/models/optimized-room.glb" as="fetch" crossorigin />
+    <link rel="preload" href="/models/optimized-room.glb" as="fetch" crossorigin="anonymous" />
     <link rel="preload" href="/images/bg.png" as="image" />
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" as="style" />
-
-    <!-- Prefetch likely next pages/resources -->
+    
+    <!-- Prefetch likely next resources -->
     <link rel="prefetch" href="/models/react_logo-transformed.glb" />
     <link rel="prefetch" href="/models/python-transformed.glb" />
-
-    <!-- Resource hints for performance -->
-    <link rel="prerender" href="/" />
   </head>
   <body>
     <div id="root"></div>
