@@ -4,6 +4,10 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 
+// Initialize advanced performance optimizations FIRST
+import { initializePerformanceOptimizations } from './utils/advancedPerformance.js';
+initializePerformanceOptimizations();
+
 // Render app first — Lenis must NOT block React mount
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

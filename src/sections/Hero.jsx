@@ -1,32 +1,55 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { memo } from "react";
+import { memo, useEffect, useRef } from "react";
 
 import AnimatedCounter from "../Components/AnimatedCounter";
 import Button from "../Components/Button";
 import { words } from "../constants";
 import HeroExperience from "../Components/models/hero_models/HeroExperience";
+import { rafScheduler } from "../utils/advancedPerformance";
 
 const Hero = memo(() => {
+  const sectionRef = useRef(null);
+
   useGSAP(() => {
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-    tl.fromTo(".hero-badge",   { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 })
+    // Ultra-fast timeline with optimized easing
+    const tl = gsap.timeline({ 
+      defaults: { 
+        ease: "power2.out", // Snappier easing
+        duration: 0.4, // Faster default duration
+      } 
+    });
+    
+    tl.fromTo(".hero-badge",   { y: 15, opacity: 0 }, { y: 0, opacity: 1 })
       .fromTo(".hero-text h1, .hero-text h3, .hero-text h4",
-        { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.15, duration: 0.8 }, "-=0.3")
-      .fromTo(".hero-desc",    { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7 }, "-=0.4")
-      .fromTo(".hero-cta",     { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, "-=0.3")
-      .fromTo(".hero-stats",   { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, "-=0.2");
+        { y: 25, opacity: 0 },
+        { y: 0, opacity: 1, stagger: 0.1, duration: 0.5 }, "-=0.2")
+      .fromTo(".hero-desc",    { y: 15, opacity: 0 }, { y: 0, opacity: 1 }, "-=0.3")
+      .fromTo(".hero-cta",     { y: 15, opacity: 0 }, { y: 0, opacity: 1 }, "-=0.2")
+      .fromTo(".hero-stats",   { y: 15, opacity: 0 }, { y: 0, opacity: 1 }, "-=0.15");
   });
 
+  // Preload hero images with RAF scheduler
+  useEffect(() => {
+    rafScheduler.schedule('hero-preload', () => {
+      const bgImg = new Image();
+      bgImg.src = '/images/bg.png';
+      bgImg.decoding = 'async';
+      bgImg.fetchPriority = 'high';
+    }, 'high');
+  }, []);
+
   return (
-    <section id="hero" className="relative overflow-x-hidden">
+    <section id="hero" ref={sectionRef} className="relative overflow-x-hidden">
       {/* Background */}
       <div className="absolute top-0 left-0 z-10 pointer-events-none w-full h-full">
         <img 
           src="/images/bg.png" 
           alt="" 
           aria-hidden="true"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
         />
       </div>
@@ -53,6 +76,8 @@ const Hero = memo(() => {
                         <img
                           src={word.imgPath}
                           alt={word.text}
+                          loading="eager"
+                          decoding="async"
                           className="p-1 rounded-full xl:size-12 md:size-10 size-7 md:p-2 bg-white-50"
                         />
                         <span>{word.text}</span>
