@@ -22,6 +22,7 @@ const TechCard = memo(({ techStackIcon, index }) => {
   return (
     <div
       ref={ref}
+      data-tech={techStackIcon.name}
       className="card-border tech-card overflow-hidden group xl:rounded-full rounded-lg"
       style={{
         animation: inView ? `fadeInUp 0.6s ease-out ${index * 0.1}s both` : "none",
