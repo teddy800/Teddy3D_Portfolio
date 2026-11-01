@@ -19,7 +19,7 @@ const projects = [
     gradient: "linear-gradient(135deg, #0B4F9F 0%, #1E3A5F 100%)",
     priority: 1,
     github: "https://github.com/teddy800/Messob_Fleet.git",
-    live: "http://localhost:5200/dashboard/requests/status",
+    live: "https://messob-fleet-frontend.onrender.com",
   },
   {
     id: 2,
@@ -34,7 +34,7 @@ const projects = [
     gradient: "linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%)",
     priority: 2,
     github: "https://github.com/teddy800/agriconnect",
-    live: "http://localhost:5173",
+    live: "https://agriconnect-frontend-23r6.onrender.com",
   },
   {
     id: 3,
