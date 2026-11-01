@@ -18,7 +18,7 @@ const projects = [
     featured: true,
     gradient: "linear-gradient(135deg, #0B4F9F 0%, #1E3A5F 100%)",
     priority: 1,
-    github: "https://github.com/teddy800/messob-fms",
+    github: "https://github.com/teddy800/Messob_Fleet.git",
     live: "http://localhost:5200/dashboard/requests/status",
   },
   {
