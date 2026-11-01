@@ -42,24 +42,28 @@ const TechCard = memo(({ techStackIcon }) => {
 
 TechCard.displayName = "TechCard";
 
-// Featured Project Card Component
+// Featured Project Card Component - ENHANCED
 const FeaturedProjectCard = memo(({ project }) => {
   const [ref, inView] = useInView({ rootMargin: "200px" });
 
   return (
     <div
       ref={ref}
-      className="featured-project-card card-border overflow-hidden group rounded-xl"
-      style={{ opacity: inView ? 1 : 0, transition: "opacity 0.5s ease" }}
+      className="featured-project-card card-border overflow-hidden group rounded-2xl"
+      style={{ 
+        opacity: inView ? 1 : 0, 
+        transition: "opacity 0.5s ease",
+        borderColor: `${project.color}40`
+      }}
     >
       <div className="featured-project-image-wrapper">
-        <img src={project.img} alt={project.title} loading="lazy" />
-        <div className="featured-project-overlay">
-          <div className="featured-project-badge">{project.badge}</div>
-        </div>
+        <img src={project.img} alt={project.title} loading="eager" />
+        <div className="featured-project-overlay"></div>
+        <div className="featured-project-badge">{project.badge}</div>
       </div>
       <div className="featured-project-content">
         <h3 className="featured-project-title">{project.title}</h3>
+        <p className="featured-project-description">{project.description}</p>
         <div className="featured-project-tags">
           {project.tags.map((tag, idx) => (
             <span key={idx} className="featured-project-tag">{tag}</span>
@@ -83,8 +87,10 @@ const TechStack = memo(() => {
       id: 1,
       title: "MESSOB-FMS Fleet Management",
       img: "/images/Fleet.png",
-      badge: "🚗 Enterprise System",
+      badge: "🚗 Enterprise Fleet System",
       tags: ["React", "Node.js", "PostgreSQL", "Real-time"],
+      description: "Advanced fleet management with request tracking, approval workflows, and comprehensive analytics",
+      color: "#0B4F9F",
     },
     {
       id: 2,
@@ -92,6 +98,8 @@ const TechStack = memo(() => {
       img: "/images/Agriconnect.png",
       badge: "🌾 Agricultural Platform",
       tags: ["Next.js", "MongoDB", "API Integration"],
+      description: "Revolutionary farming platform connecting Ethiopian farmers to markets with real-time pricing",
+      color: "#2E7D32",
     },
   ], []);
 
@@ -116,17 +124,26 @@ const TechStack = memo(() => {
 
         {/* Featured Projects Section - OUTSTANDING DISPLAY */}
         <div className="mt-24 md:mt-32">
-          <div className="text-center mb-12">
-            <div className="inline-block mb-4 px-4 py-2 rounded-full bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/30">
-              <span className="text-cyan-400 font-bold text-sm uppercase tracking-wider">✨ Featured Projects</span>
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 mb-6 px-6 py-3 rounded-full bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 border-2 border-cyan-500/40 backdrop-blur-sm">
+              <span className="text-2xl">💼</span>
+              <span className="text-cyan-400 font-black text-base uppercase tracking-widest">Featured Projects</span>
+              <span className="text-2xl">🚀</span>
             </div>
-            <h3 className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-4">
-              Built With These Technologies 🚀
+            <h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 leading-tight">
+              <span className="bg-gradient-to-r from-white via-cyan-200 to-white bg-clip-text text-transparent">
+                Real-World Applications
+              </span>
             </h3>
-            <p className="text-white-50 text-base md:text-lg max-w-2xl mx-auto">
-              Real-world enterprise applications showcasing my full-stack expertise
+            <p className="text-white-50 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
+              Enterprise-grade systems showcasing <span className="text-cyan-400 font-bold">full-stack expertise</span>, 
+              <span className="text-emerald-400 font-bold"> modern architecture</span>, and 
+              <span className="text-purple-400 font-bold"> scalable solutions</span>
             </p>
           </div>
+          
+          {/* Project Cards */}
           <div className="featured-projects-grid">
             {featuredProjects.map((project) => (
               <FeaturedProjectCard key={project.id} project={project} />
