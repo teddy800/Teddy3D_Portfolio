@@ -9,16 +9,41 @@ gsap.registerPlugin(ScrollTrigger);
 const projects = [
   {
     id: 1,
+    title: "MESSOB-FMS Fleet Management System",
+    desc: "Enterprise-grade fleet management solution with real-time request tracking, approval workflows, and comprehensive dashboard analytics. Built for operational excellence.",
+    img: "/images/Fleet.png",
+    alt: "MESSOB-FMS Fleet Management System",
+    category: "Web",
+    tags: ["React", "Node.js", "PostgreSQL", "Real-time"],
+    featured: true,
+    gradient: "linear-gradient(135deg, #0B4F9F 0%, #1E3A5F 100%)",
+    priority: 1,
+  },
+  {
+    id: 2,
+    title: "AgriConnect - Ethiopian Agricultural Marketplace",
+    desc: "Revolutionary farming platform connecting Ethiopian farmers directly to markets. Features real-time pricing, weather advisories, and trade facilitation for sustainable agriculture.",
+    img: "/images/Agriconnect.png",
+    alt: "AgriConnect Agricultural Platform",
+    bg: "#E8F5E9",
+    category: "Web",
+    tags: ["Next.js", "MongoDB", "Real-time API", "Marketplace"],
+    featured: true,
+    gradient: "linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%)",
+    priority: 2,
+  },
+  {
+    id: 3,
     title: "Subscription Management System",
     desc: "Ready to Take Control? Join us today and simplify your subscription management.",
     img: "/images/projects/project5.png",
     alt: "Subscription Management System",
     category: "Web",
     tags: ["Next.js", "Stripe", "PostgreSQL"],
-    featured: true,
+    featured: false,
   },
   {
-    id: 2,
+    id: 4,
     title: "BookStore & Library Management Platform",
     img: "/images/projects/project8.png",
     alt: "Library Management Platform",
@@ -27,7 +52,7 @@ const projects = [
     tags: ["React", "Node.js", "MongoDB"],
   },
   {
-    id: 3,
+    id: 5,
     title: "AI-Powered Tutoring System",
     img: "/images/projects/project4.png",
     alt: "AI Tutoring System",
@@ -93,6 +118,10 @@ const AppShowcase = memo(() => {
   const featured = filtered.find((p) => p.featured) ?? filtered[0];
   const rest      = filtered.filter((p) => p !== featured);
 
+  // Get both featured projects
+  const featuredProjects = filtered.filter((p) => p.featured && p.priority);
+  const otherProjects = filtered.filter((p) => !p.featured || !p.priority);
+
   return (
     <div id="work" ref={sectionRef} className="app-showcase">
       <div className="w-full">
@@ -109,46 +138,50 @@ const AppShowcase = memo(() => {
         </div>
 
         {/* ── Grid ── */}
-        <div ref={gridRef} className="showcaselayout">
-          {/* Featured / first project */}
-          {featured ? (
-            <div className="first-project-wrapper showcase-card">
-              <div className="image-wrapper">
-                <img src={featured.img} alt={featured.alt} loading="lazy" decoding="async" />
-                {/* Tags overlay */}
-                <div className="showcase-tags">
-                  {featured.tags?.map((t) => <span key={t} className="showcase-tag">{t}</span>)}
+        <div ref={gridRef} className="showcaselayout-advanced">
+          
+          {/* FEATURED PROJECTS - BOTH FLEET & AGRICONNECT */}
+          {featuredProjects.length > 0 && (
+            <div className="featured-projects-container">
+              {featuredProjects.map((project) => (
+                <div key={project.id} className="featured-project-card-large showcase-card">
+                  <div className="image-wrapper-large" style={project.gradient ? { background: project.gradient } : {}}>
+                    <img src={project.img} alt={project.alt} loading="eager" decoding="auto" />
+                    <div className="featured-badge-large">
+                      <span className="featured-star">⭐</span> Featured Project
+                    </div>
+                    <div className="showcase-tags-large">
+                      {project.tags?.map((t) => <span key={t} className="showcase-tag-large">{t}</span>)}
+                    </div>
+                  </div>
+                  <div className="text-content-large">
+                    <h2>{project.title}</h2>
+                    {project.desc && <p className="text-white-50">{project.desc}</p>}
+                  </div>
                 </div>
-              </div>
-              <div className="text-content">
-                <h2>{featured.title}</h2>
-                {featured.desc && <p className="text-white-50 md:text-xl">{featured.desc}</p>}
-              </div>
-            </div>
-          ) : (
-            <div className="first-project-wrapper flex items-center justify-center text-white-50 text-lg">
-              No projects in this category yet.
+              ))}
             </div>
           )}
 
-          {/* Side list */}
-          <div className="overflow-hidden project-list-wrapper">
-            {rest.length > 0 ? rest.map((p) => (
-              <div key={p.id} className="project showcase-card">
-                <div className="image-wrapper relative" style={p.bg ? { background: p.bg } : {}}>
-                  <img src={p.img} alt={p.alt} loading="lazy" decoding="async" />
-                  <div className="showcase-tags">
-                    {p.tags?.map((t) => <span key={t} className="showcase-tag">{t}</span>)}
+          {/* OTHER PROJECTS */}
+          {otherProjects.length > 0 && (
+            <div className="other-projects-grid">
+              {otherProjects.map((p) => (
+                <div key={p.id} className="project-card-small showcase-card">
+                  <div className="image-wrapper-small relative" style={p.gradient ? { background: p.gradient } : (p.bg ? { background: p.bg } : {})}>
+                    <img src={p.img} alt={p.alt} loading="lazy" decoding="async" />
+                    <div className="showcase-tags">
+                      {p.tags?.map((t) => <span key={t} className="showcase-tag">{t}</span>)}
+                    </div>
+                    <div className="project-overlay">
+                      <span className="view-project-btn">View Details →</span>
+                    </div>
                   </div>
+                  <h3 className="mt-4 text-lg font-semibold">{p.title}</h3>
                 </div>
-                <h2>{p.title}</h2>
-              </div>
-            )) : (
-              <div className="flex items-center justify-center h-full text-white-50 text-sm py-10">
-                No other projects in this category.
-              </div>
-            )}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
