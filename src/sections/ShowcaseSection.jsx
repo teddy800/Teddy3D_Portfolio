@@ -147,9 +147,6 @@ const AppShowcase = memo(() => {
                 <div key={project.id} className="featured-project-card-large showcase-card">
                   <div className="image-wrapper-large" style={project.gradient ? { background: project.gradient } : {}}>
                     <img src={project.img} alt={project.alt} loading="eager" decoding="auto" />
-                    <div className="featured-badge-large">
-                      <span className="featured-star">⭐</span> Featured Project
-                    </div>
                     <div className="showcase-tags-large">
                       {project.tags?.map((t) => <span key={t} className="showcase-tag-large">{t}</span>)}
                     </div>
