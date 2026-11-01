@@ -551,21 +551,23 @@ img[loading="lazy"] {
     filter: drop-shadow(0 12px 24px currentColor) brightness(1.1);
   }
 
-  /* 2D Image Icons for PostgreSQL & REST APIs - OUTSTANDING */
+  /* 2D Image Icons for PostgreSQL & REST APIs - OUTSTANDING & LARGE */
   .tech-icon-image {
     @apply relative z-10 transition-all duration-700;
-    width: 110px;
-    height: 110px;
+    width: 140px;
+    height: 140px;
     object-fit: contain;
-    filter: drop-shadow(0 6px 12px rgba(34, 211, 238, 0.5)) brightness(1.05);
+    mix-blend-mode: screen;
+    filter: drop-shadow(0 10px 20px rgba(34, 211, 238, 0.5)) brightness(1.15) contrast(1.15);
     animation: float 4s ease-in-out infinite;
     transform-style: preserve-3d;
   }
 
   .tech-card-2d:hover .tech-icon-image {
     transform: scale(1.25) rotateY(10deg) rotateX(5deg);
-    filter: drop-shadow(0 15px 30px rgba(34, 211, 238, 0.8)) brightness(1.2) saturate(1.2);
+    filter: drop-shadow(0 15px 35px rgba(34, 211, 238, 0.8)) drop-shadow(0 0 50px rgba(34, 211, 238, 0.4)) brightness(1.3) contrast(1.2) saturate(1.15);
     animation-play-state: paused;
+    mix-blend-mode: screen;
   }
 
   .tech-icon-glow {
@@ -582,6 +584,37 @@ img[loading="lazy"] {
     height: 200px;
     opacity: 0.8;
     filter: blur(50px);
+  }
+
+  /* Enhanced styling for PostgreSQL & REST API image cards */
+  .tech-card-2d[data-tech*="PostgreSQL"],
+  .tech-card-2d[data-tech*="REST"] {
+    background: rgba(15, 23, 42, 0.3);
+    backdrop-filter: blur(12px);
+    border-color: rgba(34, 211, 238, 0.2);
+  }
+
+  .tech-card-2d[data-tech*="PostgreSQL"]:hover,
+  .tech-card-2d[data-tech*="REST"]:hover {
+    background: rgba(15, 23, 42, 0.5);
+    box-shadow: 0 0 40px rgba(34, 211, 238, 0.3), inset 0 0 20px rgba(34, 211, 238, 0.1);
+    border-color: rgba(34, 211, 238, 0.5);
+  }
+
+  /* Extra glow for image-based tech cards */
+  .tech-card-2d[data-tech*="PostgreSQL"] .tech-icon-glow,
+  .tech-card-2d[data-tech*="REST"] .tech-icon-glow {
+    width: 200px;
+    height: 200px;
+    opacity: 0.6;
+  }
+
+  .tech-card-2d[data-tech*="PostgreSQL"]:hover .tech-icon-glow,
+  .tech-card-2d[data-tech*="REST"]:hover .tech-icon-glow {
+    width: 260px;
+    height: 260px;
+    opacity: 1;
+    filter: blur(60px);
   }
 
   /* Particle effect background */
