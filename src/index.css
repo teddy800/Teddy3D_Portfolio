@@ -551,6 +551,42 @@ img[loading="lazy"] {
     filter: drop-shadow(0 12px 24px currentColor) brightness(1.1);
   }
 
+  /* 2D Image Icons for PostgreSQL & REST APIs - OUTSTANDING */
+  .tech-icon-image {
+    @apply relative z-10 transition-all duration-700;
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    mix-blend-mode: screen;
+    filter: drop-shadow(0 8px 16px rgba(34, 211, 238, 0.4)) brightness(1.1) contrast(1.1);
+    animation: float 4s ease-in-out infinite;
+    transform-style: preserve-3d;
+  }
+
+  .tech-card-2d:hover .tech-icon-image {
+    transform: scale(1.2) rotateY(10deg) rotateX(5deg);
+    filter: drop-shadow(0 12px 24px rgba(34, 211, 238, 0.7)) brightness(1.25) contrast(1.15) saturate(1.1);
+    animation-play-state: paused;
+    mix-blend-mode: screen;
+  }
+
+  /* Remove circular backgrounds from image cards */
+  .tech-card-2d[data-tech*="PostgreSQL"] .tech-card-animated-bg,
+  .tech-card-2d[data-tech*="REST"] .tech-card-animated-bg {
+    background: transparent;
+  }
+
+  .tech-card-2d[data-tech*="PostgreSQL"],
+  .tech-card-2d[data-tech*="REST"] {
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(10px);
+  }
+
+  .tech-card-2d[data-tech*="PostgreSQL"]:hover,
+  .tech-card-2d[data-tech*="REST"]:hover {
+    background: rgba(15, 23, 42, 0.6);
+  }
+
   .tech-icon-glow {
     @apply absolute rounded-full transition-all duration-700;
     width: 160px;

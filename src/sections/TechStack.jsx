@@ -15,7 +15,35 @@ const CardPlaceholder = () => (
 const TechCard = memo(({ techStackIcon }) => {
   const [ref, inView] = useInView({ rootMargin: "200px" });
 
-  // Check if it's a 2D icon card
+  // Check if it's a 2D image card (PostgreSQL, REST APIs)
+  if (techStackIcon.type === "2d-image") {
+    return (
+      <div
+        ref={ref}
+        data-tech={techStackIcon.name}
+        className="card-border tech-card tech-card-2d overflow-hidden group xl:rounded-full rounded-lg"
+        style={{ opacity: inView ? 1 : 0, transition: "opacity 0.5s ease" }}
+      >
+        <div className="tech-card-animated-bg" />
+        <div className="tech-card-content">
+          <div className="tech-icon-wrapper-2d">
+            <img 
+              src={techStackIcon.imagePath}
+              alt={techStackIcon.name}
+              className="tech-icon-image"
+              loading="lazy"
+            />
+            <div className="tech-icon-glow" style={{ background: `${techStackIcon.color}40` }}></div>
+          </div>
+          <div className="padding-x w-full">
+            <p>{techStackIcon.name}</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Check if it's a 2D SVG icon card
   if (techStackIcon.type === "2d") {
     return (
       <div
