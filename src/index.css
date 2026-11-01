@@ -204,6 +204,59 @@ img[loading="lazy"] {
       @apply w-full h-full object-cover;
     }
 
+    /* Project Links Overlay - Appears on Hover */
+    .project-links-overlay {
+      @apply absolute inset-0 flex items-center justify-center opacity-0 transition-all duration-500;
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.75));
+      backdrop-filter: blur(8px);
+      z-index: 15;
+    }
+
+    .featured-project-card-large:hover .project-links-overlay {
+      @apply opacity-100;
+    }
+
+    .project-links {
+      @apply flex flex-col sm:flex-row gap-4 px-6;
+    }
+
+    .project-link-btn {
+      @apply flex items-center gap-3 px-6 py-3 rounded-full font-bold text-base uppercase tracking-wider transition-all duration-300;
+      border: 2px solid;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .project-link-btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .github-btn {
+      @apply bg-white text-black border-white;
+    }
+
+    .github-btn:hover {
+      @apply bg-black text-white border-white;
+    }
+
+    .live-btn {
+      background: linear-gradient(135deg, #22d3ee, #3b82f6);
+      @apply text-white border-cyan-400;
+    }
+
+    .live-btn:hover {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      @apply border-purple-400;
+    }
+
+    .project-link-btn svg {
+      @apply transition-transform duration-300;
+    }
+
+    .project-link-btn:hover svg {
+      transform: scale(1.2) rotate(5deg);
+    }
+
     .featured-badge-large {
       @apply absolute top-5 right-5 px-5 py-2.5 rounded-full text-sm font-black uppercase;
       background: linear-gradient(135deg, #FFD700, #FFA500);
