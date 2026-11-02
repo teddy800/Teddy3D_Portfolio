@@ -45,7 +45,7 @@ const projects = [
     category: "Web",
     tags: ["Next.js", "Stripe", "PostgreSQL"],
     featured: false,
-    github: "https://github.com/teddy800/subscription-management",
+    github: "https://github.com/TolesaTesfaye/EAGLES-TEAM-.git",
     live: "https://subscription-management.onrender.com",
   },
   {
