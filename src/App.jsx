@@ -41,7 +41,6 @@ const App = () => {
         <CursorTrail />
         <ScrollProgressBar />
         <BackToTop />
-        <ThemeToggle />
 
         <NavBar />
         <Hero />

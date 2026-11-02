@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, memo } from "react";
 import { navLinks } from "../constants";
+import ThemeToggle from "./ThemeToggle";
 
 const NavBar = memo(() => {
   const [scrolled, setScrolled] = useState(false);
@@ -63,6 +64,9 @@ const NavBar = memo(() => {
           </nav>
 
           <div className="flex items-center gap-4">
+            {/* Theme Toggle - Minimized */}
+            <ThemeToggle />
+            
             <a href="#contact" className="contact-btn group hidden lg:flex">
               <div className="inner">
                 <span>Contact me</span>
