@@ -45,15 +45,15 @@ const AnimatedCounter = memo(() => {
         {counterItems.map((item, index) => (
           <div
             key={index}
-            className="flex flex-col justify-center p-10 rounded-lg bg-zinc-900"
+            className="counter-stat-card flex flex-col justify-center p-10 rounded-lg"
           >
             <div
               ref={(el) => { if (el) numbersRef.current[index] = el; }}
-              className="mb-2 text-5xl font-bold text-white-50"
+              className="counter-stat-number mb-2 text-5xl font-bold"
             >
               0{item.suffix}
             </div>
-            <div className="text-lg text-white-50">{item.label}</div>
+            <div className="counter-stat-label text-lg">{item.label}</div>
           </div>
         ))}
       </div>

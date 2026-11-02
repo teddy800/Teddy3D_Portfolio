@@ -121,6 +121,186 @@ img[loading="lazy"] {
     @apply grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-7;
   }
 
+  /* ============================================================
+     COUNTER STATS CARDS - OUTSTANDING LIGHT/DARK MODE
+     ============================================================ */
+  .counter-stat-card {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateZ(0);
+    
+    /* Dark mode styling */
+    background: linear-gradient(135deg, #18181b 0%, #27272a 100%);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 
+      0 10px 30px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  /* Light mode styling - Outstanding white cards with elegant shadows */
+  html.light-mode .counter-stat-card {
+    background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+    border: 2px solid rgba(34, 211, 238, 0.2);
+    box-shadow: 
+      0 15px 40px rgba(34, 211, 238, 0.15),
+      0 8px 20px rgba(59, 130, 246, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 1),
+      inset 0 -1px 0 rgba(34, 211, 238, 0.1);
+  }
+
+  /* Hover effect - Dark mode */
+  .counter-stat-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    border-color: rgba(34, 211, 238, 0.5);
+    box-shadow: 
+      0 20px 50px rgba(34, 211, 238, 0.3),
+      0 0 30px rgba(34, 211, 238, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  /* Hover effect - Light mode */
+  html.light-mode .counter-stat-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    border-color: rgba(34, 211, 238, 0.5);
+    background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+    box-shadow: 
+      0 25px 60px rgba(34, 211, 238, 0.25),
+      0 15px 35px rgba(59, 130, 246, 0.2),
+      0 0 40px rgba(34, 211, 238, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 1),
+      inset 0 -1px 0 rgba(34, 211, 238, 0.2);
+  }
+
+  /* Animated gradient border effect on hover */
+  .counter-stat-card::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 0.5rem;
+    padding: 2px;
+    background: linear-gradient(135deg, #22d3ee, #3b82f6, #8b5cf6, #ec4899);
+    background-size: 200% 200%;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    animation: gradientRotate 4s linear infinite;
+    pointer-events: none;
+  }
+
+  .counter-stat-card:hover::before {
+    opacity: 1;
+  }
+
+  @keyframes gradientRotate {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Number styling */
+  .counter-stat-number {
+    background: linear-gradient(135deg, #22d3ee 0%, #3b82f6 50%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 900;
+    letter-spacing: -1px;
+    transition: all 0.4s ease;
+    text-shadow: 0 4px 12px rgba(34, 211, 238, 0.3);
+    filter: drop-shadow(0 2px 8px rgba(34, 211, 238, 0.4));
+  }
+
+  /* Enhanced number styling for light mode */
+  html.light-mode .counter-stat-number {
+    background: linear-gradient(135deg, #0891b2 0%, #2563eb 50%, #7c3aed 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 2px 10px rgba(34, 211, 238, 0.5));
+  }
+
+  .counter-stat-card:hover .counter-stat-number {
+    transform: scale(1.08);
+    filter: drop-shadow(0 4px 15px rgba(34, 211, 238, 0.6));
+  }
+
+  /* Label styling - Dark mode */
+  .counter-stat-label {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    transition: all 0.3s ease;
+  }
+
+  /* Label styling - Light mode with high contrast */
+  html.light-mode .counter-stat-label {
+    color: #1e293b;
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(34, 211, 238, 0.1);
+  }
+
+  .counter-stat-card:hover .counter-stat-label {
+    color: #22d3ee;
+    transform: translateY(-2px);
+  }
+
+  html.light-mode .counter-stat-card:hover .counter-stat-label {
+    color: #0891b2;
+  }
+
+  /* Glow effect inside card */
+  .counter-stat-card::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.15) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .counter-stat-card:hover::after {
+    opacity: 1;
+    width: 200px;
+    height: 200px;
+  }
+
+  /* Ensure content stays above glow effect */
+  .counter-stat-number,
+  .counter-stat-label {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Staggered animation on page load */
+  .counter-stat-card {
+    animation: cardFadeIn 0.6s ease backwards;
+  }
+
+  .counter-stat-card:nth-child(1) { animation-delay: 0.1s; }
+  .counter-stat-card:nth-child(2) { animation-delay: 0.2s; }
+  .counter-stat-card:nth-child(3) { animation-delay: 0.3s; }
+  .counter-stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+  @keyframes cardFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
   .grid-12-cols {
     @apply grid grid-cols-1 gap-10 xl:grid-cols-12;
   }
