@@ -5,7 +5,9 @@ import Hero from "./sections/Hero";
 import CursorTrail from "./Components/CursorTrail";
 import ScrollProgressBar from "./Components/ScrollProgressBar";
 import BackToTop from "./Components/BackToTop";
+import ThemeToggle from "./Components/ThemeToggle";
 import { ToastProvider } from "./Components/ToastNotification";
+import { ThemeProvider } from "./contexts/ThemeContext";
 
 const ShowcaseSection = lazy(() => import("./sections/ShowcaseSection"));
 const LogoShowcase    = lazy(() => import("./sections/LogoShowcase"));
@@ -33,39 +35,42 @@ const App = () => {
   }, []);
 
   return (
-    <ToastProvider>
-      {/* Global UI chrome */}
-      <CursorTrail />
-      <ScrollProgressBar />
-      <BackToTop />
+    <ThemeProvider>
+      <ToastProvider>
+        {/* Global UI chrome */}
+        <CursorTrail />
+        <ScrollProgressBar />
+        <BackToTop />
+        <ThemeToggle />
 
-      <NavBar />
-      <Hero />
-      <Suspense fallback={<SectionFallback />}>
-        <ShowcaseSection />
-      </Suspense>
-      <Suspense fallback={<SectionFallback />}>
-        <LogoShowcase />
-      </Suspense>
-      <Suspense fallback={<SectionFallback />}>
-        <FeatureCards />
-      </Suspense>
-      <Suspense fallback={<SectionFallback />}>
-        <Experience />
-      </Suspense>
-      <Suspense fallback={<SectionFallback />}>
-        <TechStack />
-      </Suspense>
-      <Suspense fallback={<SectionFallback />}>
-        <Testimonials />
-      </Suspense>
-      <Suspense fallback={<SectionFallback />}>
-        <Contact />
-      </Suspense>
-      <Suspense fallback={<SectionFallback />}>
-        <Footer />
-      </Suspense>
-    </ToastProvider>
+        <NavBar />
+        <Hero />
+        <Suspense fallback={<SectionFallback />}>
+          <ShowcaseSection />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <LogoShowcase />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <FeatureCards />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <Experience />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <TechStack />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <Testimonials />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <Contact />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <Footer />
+        </Suspense>
+      </ToastProvider>
+    </ThemeProvider>
   );
 };
 

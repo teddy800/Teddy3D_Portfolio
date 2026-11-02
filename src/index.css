@@ -6,11 +6,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* Add this at the very top of src/index.css */
 
+/* ============================================================
+   THEME SYSTEM - ADVANCED DARK/LIGHT MODE
+   ============================================================ */
 
 :root {
   --gradient: radial-gradient(circle, #e5e5e5 0%, #fff 100%);
+  
+  /* Dark Mode Colors (Default) */
+  --bg-primary: #000000;
+  --bg-secondary: #0e0e10;
+  --bg-tertiary: #1c1c21;
+  --bg-card: #282732;
+  --text-primary: #ffffff;
+  --text-secondary: #d9ecff;
+  --text-muted: #839cb5;
+  --border-color: #1c1c21;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Light Mode Colors */
+html.light-mode {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --bg-card: #ffffff;
+  --text-primary: #1a202c;
+  --text-secondary: #2d3748;
+  --text-muted: #4a5568;
+  --border-color: #e2e8f0;
+  --shadow-color: rgba(0, 0, 0, 0.1);
 }
 
 html,
@@ -18,14 +44,15 @@ body {
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
-  background-color: black;
-  color: white;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   scroll-behavior: auto;
   font-family: "Mona Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   line-height: 1.5;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 section {
@@ -1989,4 +2016,605 @@ img {
   border-color: rgba(34,211,238,0.4);
   background: rgba(34,211,238,0.06);
   transform: translateY(-2px);
+}
+
+
+/* ============================================================
+   THEME TOGGLE BUTTON - OUTSTANDING DESIGN
+   ============================================================ */
+
+.theme-toggle-btn {
+  position: fixed;
+  top: 100px;
+  right: 30px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: var(--bg-card);
+  border: 2px solid;
+  border-color: rgba(34, 211, 238, 0.3);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 8px 25px var(--shadow-color), 0 0 20px rgba(34, 211, 238, 0.1);
+}
+
+.theme-toggle-btn:hover {
+  transform: translateY(-5px) scale(1.05);
+  border-color: rgba(34, 211, 238, 0.6);
+  box-shadow: 0 12px 35px var(--shadow-color), 0 0 30px rgba(34, 211, 238, 0.3);
+}
+
+.theme-toggle-track {
+  width: 60px;
+  height: 32px;
+  background: linear-gradient(135deg, #2d2d38, #1c1c21);
+  border-radius: 50px;
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+html.light-mode .theme-toggle-track {
+  background: linear-gradient(135deg, #e9ecef, #dee2e6);
+}
+
+.theme-toggle-thumb {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, #22d3ee, #3b82f6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 2px 8px rgba(34, 211, 238, 0.5);
+}
+
+html.light-mode .theme-toggle-thumb {
+  transform: translateX(28px);
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.5);
+}
+
+.theme-icon {
+  width: 14px;
+  height: 14px;
+  color: white;
+}
+
+.theme-toggle-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, #22d3ee, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+html.light-mode .theme-toggle-label {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .theme-toggle-btn {
+    top: 80px;
+    right: 20px;
+    padding: 10px;
+  }
+  
+  .theme-toggle-track {
+    width: 50px;
+    height: 28px;
+  }
+  
+  .theme-toggle-thumb {
+    width: 20px;
+    height: 20px;
+  }
+  
+  html.light-mode .theme-toggle-thumb {
+    transform: translateX(22px);
+  }
+}
+
+/* ============================================================
+   LIGHT MODE ADAPTATIONS FOR ALL COMPONENTS
+   ============================================================ */
+
+/* Cards and borders in light mode */
+html.light-mode .card-border {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+  box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+/* Text colors in light mode - ALL TEXT VISIBLE */
+html.light-mode .text-white-50,
+html.light-mode .text-white,
+html.light-mode p,
+html.light-mode h1,
+html.light-mode h2,
+html.light-mode h3,
+html.light-mode h4,
+html.light-mode h5,
+html.light-mode h6,
+html.light-mode span,
+html.light-mode label,
+html.light-mode a {
+  color: var(--text-primary) !important;
+}
+
+/* Hero text in light mode */
+html.light-mode .hero-text,
+html.light-mode .hero-badge {
+  color: var(--text-primary) !important;
+}
+
+/* Gradient text adaptations for light mode */
+html.light-mode .footer-name-gradient,
+html.light-mode .contact-label {
+  background: linear-gradient(135deg, #0891b2 0%, #1d4ed8 50%, #059669 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: brightness(0.9) saturate(1.3);
+}
+
+/* Featured project titles in light mode */
+html.light-mode .featured-project-title {
+  background: linear-gradient(135deg, #1a202c 0%, #0891b2 50%, #1d4ed8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Project descriptions in light mode */
+html.light-mode .featured-project-description,
+html.light-mode .text-white-50 {
+  color: var(--text-secondary) !important;
+  opacity: 0.9;
+}
+
+/* Navbar in light mode */
+html.light-mode .navbar {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-color);
+}
+
+html.light-mode .navbar.scrolled {
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+html.light-mode .navbar .logo,
+html.light-mode .navbar nav span {
+  color: var(--text-primary) !important;
+}
+
+html.light-mode .navbar .contact-btn .inner {
+  background: linear-gradient(135deg, #0891b2, #1d4ed8);
+  color: white !important;
+}
+
+html.light-mode .navbar .contact-btn .inner span {
+  color: white !important;
+}
+
+/* Form inputs in light mode */
+html.light-mode input,
+html.light-mode textarea {
+  background: var(--bg-tertiary);
+  color: var(--text-primary) !important;
+  border: 2px solid var(--border-color);
+}
+
+html.light-mode input::placeholder,
+html.light-mode textarea::placeholder {
+  color: var(--text-muted) !important;
+  opacity: 0.7;
+}
+
+/* Tech cards in light mode */
+html.light-mode .tech-card {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+  box-shadow: 0 4px 15px var(--shadow-color);
+}
+
+html.light-mode .tech-card-animated-bg {
+  background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+}
+
+html.light-mode .tech-card-content p {
+  color: var(--text-primary) !important;
+  font-weight: 600;
+}
+
+/* Experience cards in light mode */
+html.light-mode .exp-card-wrapper {
+  color: var(--text-primary) !important;
+}
+
+/* Testimonials in light mode */
+html.light-mode .testimonial-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 15px var(--shadow-color);
+}
+
+/* Footer in light mode */
+html.light-mode .footer {
+  background: var(--bg-secondary);
+  border-top: 2px solid var(--border-color);
+  color: var(--text-primary) !important;
+}
+
+html.light-mode .footer p,
+html.light-mode .footer a {
+  color: var(--text-secondary) !important;
+}
+
+html.light-mode .footer p:hover,
+html.light-mode .footer a:hover {
+  color: var(--text-primary) !important;
+}
+
+/* Buttons in light mode */
+html.light-mode .cta-button {
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+}
+
+html.light-mode .cta-button .text {
+  color: var(--text-primary) !important;
+  font-weight: 700;
+}
+
+html.light-mode .cta-button .bg-circle {
+  background: linear-gradient(135deg, #0891b2, #1d4ed8);
+}
+
+/* Scroll progress bar color adjustment */
+html.light-mode .scroll-progress-bar {
+  background: linear-gradient(90deg, #0891b2, #1d4ed8, #7c3aed);
+}
+
+/* Featured project cards in light mode */
+html.light-mode .featured-project-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 249, 250, 0.95));
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+  border: 2px solid var(--border-color);
+}
+
+html.light-mode .featured-project-card:hover {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+/* Project tags in light mode */
+html.light-mode .featured-project-tag,
+html.light-mode .showcase-tag,
+html.light-mode .showcase-tag-large {
+  background: rgba(8, 145, 178, 0.15);
+  border-color: rgba(8, 145, 178, 0.6);
+  color: #0891b2 !important;
+  font-weight: 700;
+}
+
+/* Badge colors in light mode */
+html.light-mode .featured-project-badge,
+html.light-mode .featured-badge-large {
+  background: linear-gradient(135deg, #0891b2, #1d4ed8, #7c3aed);
+  color: white !important;
+  font-weight: 900;
+}
+
+/* Logo images - ensure visibility */
+html.light-mode .marquee-item img {
+  filter: brightness(0.8) contrast(1.1);
+  mix-blend-mode: multiply;
+}
+
+/* Section backgrounds in light mode */
+html.light-mode section {
+  background: var(--bg-primary);
+}
+
+/* Title headers in light mode */
+html.light-mode .title-header h2,
+html.light-mode .title-header p {
+  color: var(--text-primary) !important;
+}
+
+/* Ability cards in light mode */
+html.light-mode .ability-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 15px var(--shadow-color);
+}
+
+html.light-mode .ability-card h3,
+html.light-mode .ability-card p {
+  color: var(--text-primary) !important;
+}
+
+/* Counter section in light mode */
+html.light-mode .counter-item {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-color);
+}
+
+html.light-mode .counter-item .number,
+html.light-mode .counter-item .label {
+  color: var(--text-primary) !important;
+}
+
+/* Back to top button in light mode */
+html.light-mode .back-to-top-btn {
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  box-shadow: 0 4px 15px var(--shadow-color);
+}
+
+html.light-mode .back-to-top-btn:hover {
+  background: linear-gradient(135deg, #0891b2, #1d4ed8);
+  color: white !important;
+}
+
+/* Project links overlay in light mode */
+html.light-mode .project-links-overlay,
+html.light-mode .project-links-overlay-small {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.97), rgba(248, 249, 250, 0.95));
+}
+
+html.light-mode .project-link-btn.github-btn {
+  background: var(--text-primary);
+  color: white !important;
+  border-color: var(--text-primary);
+}
+
+html.light-mode .project-link-btn.github-btn:hover {
+  background: var(--text-secondary);
+  color: white !important;
+}
+
+/* Ensure all headings are visible */
+html.light-mode h1,
+html.light-mode h2,
+html.light-mode h3,
+html.light-mode h4,
+html.light-mode h5,
+html.light-mode h6 {
+  color: var(--text-primary) !important;
+  font-weight: 700;
+}
+
+
+/* ============================================================
+   ADDITIONAL LIGHT MODE FIXES - FILTER BUTTONS & MORE
+   ============================================================ */
+
+/* Showcase filter buttons in light mode */
+html.light-mode .showcase-filter-btn {
+  background: var(--bg-card);
+  color: var(--text-primary) !important;
+  border: 2px solid var(--border-color);
+  font-weight: 600;
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+html.light-mode .showcase-filter-btn:hover {
+  background: var(--bg-tertiary);
+  border-color: #0891b2;
+  color: #0891b2 !important;
+}
+
+html.light-mode .showcase-filter-btn--active {
+  background: linear-gradient(135deg, #0891b2, #1d4ed8);
+  color: white !important;
+  border-color: #0891b2;
+  box-shadow: 0 4px 15px rgba(8, 145, 178, 0.3);
+}
+
+html.light-mode .showcase-filter-btn__dot {
+  background: white !important;
+}
+
+/* Showcase section text in light mode */
+html.light-mode .showcaselayout h2,
+html.light-mode .showcaselayout h3,
+html.light-mode .showcaselayout p {
+  color: var(--text-primary) !important;
+}
+
+html.light-mode .text-content-large h2,
+html.light-mode .text-content-large p {
+  color: var(--text-primary) !important;
+}
+
+/* Hero section text in light mode */
+html.light-mode .hero-text {
+  color: var(--text-primary) !important;
+}
+
+html.light-mode .hero-badge {
+  background: var(--bg-card);
+  color: var(--text-primary) !important;
+  border: 2px solid var(--border-color);
+}
+
+/* Ensure all white text becomes dark in light mode */
+html.light-mode * {
+  color: inherit;
+}
+
+html.light-mode body,
+html.light-mode section,
+html.light-mode div {
+  color: var(--text-primary);
+}
+
+/* Override any remaining white text */
+html.light-mode [style*="color: white"],
+html.light-mode [style*="color: #fff"],
+html.light-mode [style*="color: #ffffff"] {
+  color: var(--text-primary) !important;
+}
+
+/* Title headers in light mode */
+html.light-mode .title-header * {
+  color: var(--text-primary) !important;
+}
+
+/* Experience section in light mode */
+html.light-mode .exp-card-wrapper * {
+  color: var(--text-primary) !important;
+}
+
+/* Testimonial text in light mode */
+html.light-mode .testimonial-card * {
+  color: var(--text-primary) !important;
+}
+
+/* Contact section in light mode */
+html.light-mode #contact * {
+  color: var(--text-primary) !important;
+}
+
+html.light-mode #contact .contact-label {
+  background: linear-gradient(135deg, #0891b2 0%, #1d4ed8 50%, #059669 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Abilities/Feature cards in light mode */
+html.light-mode .ability-card *,
+html.light-mode .feature-card * {
+  color: var(--text-primary) !important;
+}
+
+/* Logo showcase section in light mode */
+html.light-mode .marquee {
+  background: var(--bg-secondary);
+}
+
+/* Tech stack section in light mode */
+html.light-mode #skills * {
+  color: var(--text-primary) !important;
+}
+
+html.light-mode .tech-card-content p {
+  color: var(--text-primary) !important;
+  font-weight: 700;
+}
+
+/* Project showcase in light mode */
+html.light-mode .app-showcase * {
+  color: var(--text-primary) !important;
+}
+
+/* Override gradient text for better visibility */
+html.light-mode .featured-project-title {
+  background: linear-gradient(135deg, #1a202c 0%, #0891b2 50%, #1d4ed8 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+/* Ensure placeholder text is visible */
+html.light-mode ::placeholder {
+  color: var(--text-muted) !important;
+  opacity: 0.8 !important;
+}
+
+/* Dark backgrounds should have light text in light mode */
+html.light-mode [class*="bg-black"],
+html.light-mode [class*="bg-dark"] {
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Counter section */
+html.light-mode #counter * {
+  color: var(--text-primary) !important;
+}
+
+/* Footer social icons background */
+html.light-mode .footer .icon {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+}
+
+html.light-mode .footer .icon:hover {
+  background: var(--bg-tertiary);
+}
+
+/* Ensure buttons text is visible */
+html.light-mode button {
+  color: var(--text-primary) !important;
+}
+
+html.light-mode button.theme-toggle-btn {
+  color: var(--text-secondary) !important;
+}
+
+/* CTA buttons */
+html.light-mode .cta-button .text {
+  color: var(--text-primary) !important;
+  font-weight: 700 !important;
+}
+
+html.light-mode .cta-button:hover .text {
+  color: white !important;
+}
+
+/* Project links */
+html.light-mode .project-link-btn span,
+html.light-mode .project-link-btn-small span {
+  color: inherit !important;
+}
+
+/* Navbar links */
+html.light-mode .navbar ul li span {
+  color: var(--text-primary) !important;
+  font-weight: 600;
+}
+
+html.light-mode .navbar ul li:hover span {
+  color: #0891b2 !important;
+}
+
+/* Back to top button */
+html.light-mode .back-to-top-btn svg {
+  color: var(--text-primary) !important;
+}
+
+/* Page loader in light mode */
+html.light-mode .page-loader {
+  background: var(--bg-primary);
+}
+
+html.light-mode .page-loader__name {
+  background: linear-gradient(135deg, #0891b2, #059669);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+html.light-mode .page-loader__subtitle,
+html.light-mode .page-loader__percent {
+  color: var(--text-secondary) !important;
 }
