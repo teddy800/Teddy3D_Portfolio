@@ -19,8 +19,8 @@ const Footer = memo(() => {
       <div className="footer-container">
         {/* Left — branding */}
         <div className="flex flex-col justify-center">
-          <p className="font-semibold text-white">Tewodiros Fikadu</p>
-          <p className="text-sm mt-1">Full-Stack Developer · Ethiopia</p>
+          <p className="font-semibold text-white footer-name-gradient">Tewodiros Fikadu</p>
+          <p className="text-sm mt-1">Software Engineer · Ethiopia</p>
         </div>
 
         {/* Center — contact info */}
@@ -64,7 +64,7 @@ const Footer = memo(() => {
         {/* Copyright */}
         <div className="flex flex-col justify-center md:col-span-3">
           <p className="text-center text-xs mt-4 md:mt-0">
-            © {new Date().getFullYear()} Tewodiros Fikadu. All rights reserved.
+            © {new Date().getFullYear()} <span className="footer-name-gradient">Tewodiros Fikadu</span>. All rights reserved.
           </p>
         </div>
       </div>

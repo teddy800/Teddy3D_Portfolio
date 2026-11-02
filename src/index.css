@@ -877,6 +877,27 @@ img[loading="lazy"] {
       }
     }
   }
+
+  /* Outstanding Blue-Green Gradient for Footer Name */
+  .footer-name-gradient {
+    background: linear-gradient(135deg, #22d3ee 0%, #3b82f6 25%, #10b981 50%, #22d3ee 75%, #3b82f6 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 4s ease-in-out infinite;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  @keyframes gradientShift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
 }
 
 /* Hero text slider starts */
@@ -999,12 +1020,15 @@ img[loading="lazy"] {
   );
 }
 
-/* marquee */
+/* ============================================================
+   MARQUEE - ALTERNATING DIRECTIONS (RENDER-STYLE)
+   ============================================================ */
 .marquee {
   width: 100%;
   overflow: hidden;
   position: relative;
 }
+
 .marquee-box {
   display: flex;
   align-items: center;
@@ -1012,19 +1036,50 @@ img[loading="lazy"] {
   height: 100%;
   position: absolute;
   overflow: hidden;
-  animation: marquee 60s linear infinite;
 }
+
 .marquee-item {
   float: left;
+  transition: transform 0.3s ease;
 }
-@keyframes marquee {
+
+.marquee-item:hover {
+  transform: scale(1.1);
+}
+
+/* Right-to-Left Animation (Row 1) */
+.marquee-rtl {
+  animation: marqueeRTL 40s linear infinite;
+}
+
+@keyframes marqueeRTL {
   0% {
-    left: 0;
+    transform: translateX(0);
   }
   100% {
-    left: -100%;
+    transform: translateX(-50%);
   }
 }
+
+/* Left-to-Right Animation (Row 2 - Opposite Direction) */
+.marquee-ltr {
+  animation: marqueeLTR 40s linear infinite;
+}
+
+@keyframes marqueeLTR {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Smooth hover pause effect */
+.marquee:hover .marquee-box {
+  animation-play-state: paused;
+}
+
 /* marquee end */
 
 .card {
