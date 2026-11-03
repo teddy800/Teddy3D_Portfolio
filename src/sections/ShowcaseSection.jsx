@@ -43,7 +43,7 @@ const projects = [
     img: "/images/projects/project5.png",
     alt: "Subscription Management System",
     category: "Web",
-    tags: ["Next.js", "Stripe", "PostgreSQL"],
+    tags: ["Next.js", "Stripe", "PHP"],
     featured: false,
     github: "https://github.com/TolesaTesfaye/EAGLES-TEAM-.git",
     live: "https://subscription-management.onrender.com",
