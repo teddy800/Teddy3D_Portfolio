@@ -5,24 +5,39 @@ import TechIconCardExperience, { preloadTechModels } from "../Components/models/
 import { techStackIcons } from "../constants";
 import { useInView } from "../hooks/useInView";
 
-// Simple placeholder
+// ============================================================================
+// INSTANT LOADING PLACEHOLDER - NO LAG
+// ============================================================================
 const CardPlaceholder = () => (
-  <div className="w-full h-full flex items-center justify-center bg-slate-800/20 rounded-lg">
-    <div className="w-12 h-12 rounded-full bg-slate-700/40 animate-pulse" />
+  <div className="w-full h-full flex items-center justify-center">
+    <div 
+      className="w-20 h-20 rounded-full animate-pulse"
+      style={{
+        background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.12) 0%, rgba(59, 130, 246, 0.12) 100%)',
+        boxShadow: '0 0 25px rgba(6, 182, 212, 0.25)',
+      }}
+    />
   </div>
 );
 
+// ============================================================================
+// ULTRA-FAST TECH CARD - INSTANT RENDER
+// ============================================================================
 const TechCard = memo(({ techStackIcon }) => {
-  const [ref, inView] = useInView({ rootMargin: "200px" });
+  const [ref, inView] = useInView({ rootMargin: "300px" }); // Load way before visible
 
-  // Check if it's a 2D image card (PostgreSQL, REST APIs)
+  // 2D IMAGE cards - instant render
   if (techStackIcon.type === "2d-image") {
     return (
       <div
         ref={ref}
         data-tech={techStackIcon.name}
         className="card-border tech-card tech-card-2d overflow-hidden group xl:rounded-full rounded-lg"
-        style={{ opacity: inView ? 1 : 0, transition: "opacity 0.5s ease" }}
+        style={{ 
+          opacity: inView ? 1 : 0, 
+          transition: 'opacity 0.3s ease-out',
+          willChange: 'opacity'
+        }}
       >
         <div className="tech-card-animated-bg" />
         <div className="tech-card-content">
@@ -31,7 +46,8 @@ const TechCard = memo(({ techStackIcon }) => {
               src={techStackIcon.imagePath}
               alt={techStackIcon.name}
               className="tech-icon-image"
-              loading="lazy"
+              loading="eager"
+              decoding="async"
             />
             <div className="tech-icon-glow" style={{ background: `${techStackIcon.color}40` }}></div>
           </div>
@@ -43,14 +59,18 @@ const TechCard = memo(({ techStackIcon }) => {
     );
   }
 
-  // Check if it's a 2D SVG icon card
+  // 2D SVG cards - instant render
   if (techStackIcon.type === "2d") {
     return (
       <div
         ref={ref}
         data-tech={techStackIcon.name}
         className="card-border tech-card tech-card-2d overflow-hidden group xl:rounded-full rounded-lg"
-        style={{ opacity: inView ? 1 : 0, transition: "opacity 0.5s ease" }}
+        style={{ 
+          opacity: inView ? 1 : 0, 
+          transition: 'opacity 0.3s ease-out',
+          willChange: 'opacity'
+        }}
       >
         <div className="tech-card-animated-bg" />
         <div className="tech-card-content">
@@ -70,12 +90,13 @@ const TechCard = memo(({ techStackIcon }) => {
     );
   }
 
-  // Original 3D model card
+  // 3D MODEL cards - optimized render
   return (
     <div
       ref={ref}
       data-tech={techStackIcon.name}
       className="card-border tech-card overflow-hidden group xl:rounded-full rounded-lg"
+      style={{ willChange: 'opacity' }}
     >
       <div className="tech-card-animated-bg" />
       <div className="tech-card-content">
@@ -132,7 +153,11 @@ const FeaturedProjectCard = memo(({ project }) => {
 
 FeaturedProjectCard.displayName = "FeaturedProjectCard";
 
+// ============================================================================
+// MAIN TECH STACK COMPONENT - INSTANT LOAD WITH PRELOADING
+// ============================================================================
 const TechStack = memo(() => {
+  // Memoize cards once
   const memoizedCards = useMemo(
     () => techStackIcons.map((icon, idx) => ({ ...icon, id: `${icon.name}-${idx}` })),
     []
@@ -144,7 +169,7 @@ const TechStack = memo(() => {
       title: "MESSOB-FMS Fleet Management",
       img: "/images/Fleet.png",
       badge: "🚗 Enterprise Fleet System",
-      tags: ["React", "Node.js", "PostgreSQL", "Real-time"],
+      tags: ["React", "Python", "PostgreSQL", "Real-time"],
       description: "Advanced fleet management with request tracking, approval workflows, and comprehensive analytics",
       color: "#0B4F9F",
     },
@@ -159,9 +184,17 @@ const TechStack = memo(() => {
     },
   ], []);
 
+  // AGGRESSIVE PRELOADING - Start immediately on mount
   useEffect(() => {
+    // Immediate preload
     preloadTechModels(memoizedCards);
-  }, [memoizedCards]);
+    
+    // Also preload project images
+    featuredProjects.forEach(project => {
+      const img = new Image();
+      img.src = project.img;
+    });
+  }, [memoizedCards, featuredProjects]);
 
   return (
     <div id="skills" className="flex-center section-padding">
@@ -171,14 +204,14 @@ const TechStack = memo(() => {
           sub="🤝 What I Bring to the Table"
         />
         
-        {/* Tech Stack Grid */}
+        {/* ULTRA-FAST Tech Stack Grid */}
         <div className="tech-grid">
           {memoizedCards.map((techStackIcon) => (
             <TechCard key={techStackIcon.id} techStackIcon={techStackIcon} />
           ))}
         </div>
 
-        {/* Featured Projects Section - OUTSTANDING DISPLAY */}
+        {/* Featured Projects Section - INSTANT LOAD */}
         <div className="mt-24 md:mt-32">
           {/* Section Header */}
           <div className="text-center mb-16">

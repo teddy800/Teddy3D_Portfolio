@@ -763,22 +763,35 @@ img[loading="lazy"] {
     }
   }
 
+  /* ============================================================
+     TECH GRID - ULTRA-OPTIMIZED FOR INSTANT LOADING
+     ============================================================ */
   .tech-grid {
     @apply grid grid-cols-2 gap-6 mt-16 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 xl:gap-8;
+    /* Performance optimizations */
+    will-change: contents;
+    contain: layout style;
   }
 
   .tech-icon-wrapper {
     @apply relative flex items-center justify-center;
     width: 100%;
     height: 200px;
+    /* Instant rendering optimizations */
+    contain: layout style paint;
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 
-  /* 2D Icon Cards for New Tech Skills - ADVANCED */
+  /* 2D Icon Cards for New Tech Skills - INSTANT RENDER */
   .tech-card-2d .tech-icon-wrapper-2d {
     @apply relative flex items-center justify-center;
     width: 100%;
     height: 200px;
     perspective: 1000px;
+    /* Performance boost */
+    will-change: transform;
+    transform: translateZ(0);
   }
 
   .tech-icon-svg {
@@ -787,6 +800,9 @@ img[loading="lazy"] {
     height: 110px;
     animation: float 4s ease-in-out infinite;
     transform-style: preserve-3d;
+    /* Hardware acceleration */
+    will-change: transform;
+    backface-visibility: hidden;
   }
 
   .tech-icon-svg svg {
@@ -805,7 +821,7 @@ img[loading="lazy"] {
     filter: drop-shadow(0 12px 24px currentColor) brightness(1.1);
   }
 
-  /* 2D Image Icons for PostgreSQL & REST APIs - OUTSTANDING & LARGE */
+  /* 2D Image Icons - INSTANT LOAD WITH GPU ACCELERATION */
   .tech-icon-image {
     @apply relative z-10 transition-all duration-700;
     width: 140px;
@@ -815,10 +831,14 @@ img[loading="lazy"] {
     filter: drop-shadow(0 10px 20px rgba(34, 211, 238, 0.5)) brightness(1.15) contrast(1.15);
     animation: float 4s ease-in-out infinite;
     transform-style: preserve-3d;
+    /* GPU acceleration for instant rendering */
+    will-change: transform, filter;
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 
   .tech-card-2d:hover .tech-icon-image {
-    transform: scale(1.25) rotateY(10deg) rotateX(5deg);
+    transform: scale(1.25) rotateY(10deg) rotateX(5deg) translateZ(0);
     filter: drop-shadow(0 15px 35px rgba(34, 211, 238, 0.8)) drop-shadow(0 0 50px rgba(34, 211, 238, 0.4)) brightness(1.3) contrast(1.2) saturate(1.15);
     animation-play-state: paused;
     mix-blend-mode: screen;
@@ -831,6 +851,9 @@ img[loading="lazy"] {
     opacity: 0.5;
     filter: blur(40px);
     animation: pulse 3s ease-in-out infinite;
+    /* Performance optimization */
+    will-change: opacity, filter;
+    transform: translateZ(0);
   }
 
   .tech-card-2d:hover .tech-icon-glow {

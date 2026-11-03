@@ -4,117 +4,157 @@ import { useThree, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import Optimized3DCanvas from "../../Optimized3DCanvas";
 
-// Global model cache for instant reuse
+// ============================================================================
+// ULTRA-FAST CACHING SYSTEM - INSTANT LOADING
+// ============================================================================
 const modelCache = new Map();
 const textureCache = new Map();
+const geometryCache = new Map();
+let preloadStarted = false;
 
-// Preload all models immediately on module load for instant access
+// Aggressive preloading with priority queue
 const preloadAllModels = () => {
+  if (preloadStarted) return;
+  preloadStarted = true;
+
   const modelPaths = [
     '/models/react_logo-transformed.glb',
     '/models/python-transformed.glb',
-    '/models/javascript-transformed.glb',
     '/models/node-transformed.glb',
-    '/models/nextjs.glb',
     '/models/three.js-transformed.glb',
-    '/models/figma.glb',
     '/models/git-svg-transformed.glb',
+    '/models/javascript-transformed.glb',
+    '/models/nextjs.glb',
+    '/models/figma.glb',
     '/models/ai-brain.glb',
     '/models/react-native.glb',
   ];
 
+  // Immediate preload with high priority
   modelPaths.forEach(path => {
     if (!modelCache.has(path)) {
-      useGLTF.preload(path);
-      modelCache.set(path, true);
+      try {
+        useGLTF.preload(path);
+        modelCache.set(path, 'preloading');
+      } catch (error) {
+        console.warn(`Preload skipped for ${path}`);
+      }
     }
   });
 };
 
-// Execute preload immediately
+// Execute preload ASAP
 if (typeof window !== 'undefined') {
-  preloadAllModels();
+  // Start preloading immediately
+  setTimeout(() => preloadAllModels(), 0);
+  
+  // Also preload on user interaction for instant response
+  const preloadOnInteraction = () => {
+    preloadAllModels();
+    window.removeEventListener('mousemove', preloadOnInteraction);
+    window.removeEventListener('touchstart', preloadOnInteraction);
+  };
+  
+  window.addEventListener('mousemove', preloadOnInteraction, { once: true, passive: true });
+  window.addEventListener('touchstart', preloadOnInteraction, { once: true, passive: true });
 }
 
-// Ultra-fast scene with minimal overhead
+// ============================================================================
+// ULTRA-OPTIMIZED 3D SCENE - ZERO LAG, MAXIMUM PERFORMANCE
+// ============================================================================
 const TechScene = memo(({ model, isHovered }) => {
   const scene = useGLTF(model.modelPath);
   const { gl } = useThree();
   const groupRef = useRef();
-  const [isOptimized, setIsOptimized] = useState(false);
+  const optimizedRef = useRef(false);
+  const rotationRef = useRef(0);
 
-  // One-time optimization on mount
+  // INSTANT one-time optimization - runs once and caches forever
   useEffect(() => {
-    if (isOptimized) return;
+    if (optimizedRef.current) return;
+    
+    const cacheKey = model.modelPath;
+    
+    // Check if already optimized globally
+    if (geometryCache.has(cacheKey)) {
+      optimizedRef.current = true;
+      return;
+    }
 
-    // Apply special materials
+    // Special material for Interactive Developer
     if (model.name === "Interactive Developer") {
       scene.scene.traverse((child) => {
         if (child.isMesh && child.name === "Object_5") {
           child.material = new THREE.MeshStandardMaterial({ 
             color: "white",
-            metalness: 0.3,
-            roughness: 0.7,
+            metalness: 0.2,
+            roughness: 0.8,
+            precision: 'lowp',
           });
         }
       });
     }
 
-    // Ultra-fast optimization
+    // ULTRA-AGGRESSIVE optimization for instant rendering
     scene.scene.traverse((child) => {
       if (child.isMesh) {
+        // Disable expensive updates
         child.frustumCulled = true;
         child.matrixAutoUpdate = false;
         child.updateMatrix();
         
+        // Material optimization
         if (child.material) {
-          // Optimize material
           child.material.precision = 'lowp';
-          child.material.needsUpdate = true;
+          child.material.flatShading = false;
           
-          // Cache and optimize textures
+          // Texture caching and optimization
           if (child.material.map && !textureCache.has(child.material.map.uuid)) {
             const texture = child.material.map;
-            texture.anisotropy = Math.min(4, gl.capabilities.getMaxAnisotropy());
+            texture.anisotropy = 1; // Minimal for speed
             texture.generateMipmaps = true;
             texture.minFilter = THREE.LinearMipmapLinearFilter;
             texture.magFilter = THREE.LinearFilter;
-            textureCache.set(texture.uuid, true);
+            textureCache.set(texture.uuid, texture);
           }
+          
+          // Disable expensive material features
+          child.material.needsUpdate = false;
         }
         
-        // Optimize geometry
-        if (child.geometry) {
+        // Geometry optimization
+        if (child.geometry && !child.geometry.boundingSphere) {
           child.geometry.computeBoundingSphere();
         }
       }
     });
 
-    setIsOptimized(true);
-  }, [scene, model.name, gl, isOptimized]);
+    geometryCache.set(cacheKey, true);
+    optimizedRef.current = true;
+  }, [scene, model.name, model.modelPath, gl]);
 
-  // Smooth rotation animation for hover
+  // Ultra-smooth rotation with requestAnimationFrame timing
   useFrame((state, delta) => {
     if (groupRef.current && isHovered) {
-      groupRef.current.rotation.y += delta * 0.3;
+      rotationRef.current += delta * 0.5;
+      groupRef.current.rotation.y = rotationRef.current;
     }
   });
 
   return (
     <>
-      {/* Minimal lighting for performance */}
-      <ambientLight intensity={0.4} />
-      <directionalLight position={[5, 5, 5]} intensity={0.8} castShadow={false} />
-      <spotLight position={[10, 15, 10]} angle={0.3} penumbra={1} intensity={1.5} castShadow={false} />
+      {/* Minimal, performant lighting setup */}
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[3, 5, 3]} intensity={0.6} castShadow={false} />
       
-      {/* Lightweight environment */}
-      <Environment preset="city" background={false} />
+      {/* Lightweight environment - no background for speed */}
+      <Environment preset="city" background={false} environmentIntensity={0.3} />
       
       <Float 
-        speed={isHovered ? 6 : 4} 
-        rotationIntensity={isHovered ? 0.6 : 0.3} 
-        floatIntensity={isHovered ? 1 : 0.7}
-        floatingRange={[-0.1, 0.1]}
+        speed={isHovered ? 5 : 3.5} 
+        rotationIntensity={isHovered ? 0.4 : 0.2} 
+        floatIntensity={isHovered ? 0.8 : 0.5}
+        floatingRange={[-0.08, 0.08]}
       >
         <group 
           ref={groupRef}
@@ -125,12 +165,13 @@ const TechScene = memo(({ model, isHovered }) => {
         </group>
       </Float>
       
-      {/* Minimal controls for performance */}
+      {/* Ultra-minimal controls */}
       <OrbitControls 
         enableZoom={false} 
         enablePan={false}
         enableDamping={false}
         autoRotate={false}
+        enableRotate={false}
         makeDefault 
       />
     </>
@@ -139,55 +180,67 @@ const TechScene = memo(({ model, isHovered }) => {
 
 TechScene.displayName = "TechScene";
 
+// ============================================================================
+// INSTANT-RENDER COMPONENT - ZERO LAG
+// ============================================================================
 const TechIconCardExperience = memo(({ model }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
+  const observerRef = useRef(null);
+  const cardRef = useRef(null);
 
-  // Aggressive preloading - start loading before fully visible
+  // ULTRA-AGGRESSIVE intersection observer - loads 300px before visible
   useEffect(() => {
-    const observer = new IntersectionObserver(
+    // Find the card element
+    const cardElement = document.querySelector(`[data-tech="${model.name}"]`);
+    if (!cardElement) return;
+    
+    cardRef.current = cardElement;
+
+    // Create high-performance observer
+    observerRef.current = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          // Immediate rendering for instant appearance
-          requestAnimationFrame(() => {
-            setShouldRender(true);
-          });
-        } else {
-          setIsVisible(false);
+        if (entry.isIntersecting || entry.intersectionRatio > 0) {
+          // INSTANT rendering - no delays
+          setShouldRender(true);
         }
       },
       { 
-        threshold: 0.01,
-        rootMargin: '200px' // Load well before visible for instant appearance
+        threshold: [0, 0.01], // Trigger as soon as visible
+        rootMargin: '300px 0px 300px 0px' // Load way before visible for instant appearance
       }
     );
 
-    const cardElement = document.querySelector(`[data-tech="${model.name}"]`);
-    if (cardElement) {
-      observer.observe(cardElement);
-      
-      // Optimized event handlers
-      const handleMouseEnter = () => setIsHovered(true);
-      const handleMouseLeave = () => setIsHovered(false);
-      
-      cardElement.addEventListener('mouseenter', handleMouseEnter, { passive: true });
-      cardElement.addEventListener('mouseleave', handleMouseLeave, { passive: true });
-      
-      return () => {
-        observer.unobserve(cardElement);
-        cardElement.removeEventListener('mouseenter', handleMouseEnter);
-        cardElement.removeEventListener('mouseleave', handleMouseLeave);
-      };
-    }
+    observerRef.current.observe(cardElement);
+
+    // Optimized passive event listeners
+    const handleMouseEnter = () => setIsHovered(true);
+    const handleMouseLeave = () => setIsHovered(false);
+    
+    cardElement.addEventListener('mouseenter', handleMouseEnter, { passive: true });
+    cardElement.addEventListener('mouseleave', handleMouseLeave, { passive: true });
+    
+    return () => {
+      if (observerRef.current && cardElement) {
+        observerRef.current.unobserve(cardElement);
+        observerRef.current.disconnect();
+      }
+      cardElement.removeEventListener('mouseenter', handleMouseEnter);
+      cardElement.removeEventListener('mouseleave', handleMouseLeave);
+    };
   }, [model.name]);
 
-  // Show static placeholder while preparing
+  // Show instant placeholder - no loading states
   if (!shouldRender) {
     return (
-      <div className="w-52 h-60 flex items-center justify-center bg-gradient-to-br from-slate-800/20 to-slate-900/20 rounded-lg">
-        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-cyan-500/20 to-blue-500/20 animate-pulse" />
+      <div className="w-full h-full flex items-center justify-center">
+        <div 
+          className="w-20 h-20 rounded-full animate-pulse"
+          style={{
+            background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.15) 0%, rgba(59, 130, 246, 0.15) 100%)',
+            boxShadow: '0 0 30px rgba(6, 182, 212, 0.3)',
+          }}
+        />
       </div>
     );
   }
@@ -197,8 +250,16 @@ const TechIconCardExperience = memo(({ model }) => {
       shadows={false}
       postProcessing={false}
       frameloop="always"
+      dpr={[1, 1.5]} // Limit pixel ratio for speed
+      performance={{ min: 0.8 }} // Maintain performance
       className="w-full h-full"
-      camera={{ position: [0, 0, 5], fov: 50 }}
+      camera={{ position: [0, 0, 5], fov: 50, near: 0.1, far: 100 }}
+      gl={{ 
+        antialias: false, // Disable for speed
+        alpha: true,
+        powerPreference: "high-performance",
+        precision: 'lowp',
+      }}
     >
       <TechScene model={model} isHovered={isHovered} />
     </Optimized3DCanvas>
@@ -207,14 +268,26 @@ const TechIconCardExperience = memo(({ model }) => {
 
 TechIconCardExperience.displayName = "TechIconCardExperience";
 
-// Enhanced preload function
+// ============================================================================
+// ENHANCED PRELOAD FUNCTION - INSTANT MODEL LOADING
+// ============================================================================
 export const preloadTechModels = (models) => {
+  // Immediate preload - no delays
   models.forEach((model) => {
-    if (!modelCache.has(model.modelPath)) {
-      useGLTF.preload(model.modelPath);
-      modelCache.set(model.modelPath, true);
+    if (model.modelPath && !modelCache.has(model.modelPath)) {
+      try {
+        useGLTF.preload(model.modelPath);
+        modelCache.set(model.modelPath, 'loaded');
+      } catch (error) {
+        console.warn(`Failed to preload ${model.modelPath}:`, error);
+      }
     }
   });
+  
+  // Also trigger global preload if not started
+  if (!preloadStarted) {
+    preloadAllModels();
+  }
 };
 
 export default TechIconCardExperience;
