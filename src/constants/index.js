@@ -216,7 +216,9 @@ const expCards = [
     responsibilities: [
       "Led the development of Fullstack web applications, focusing on scalability.",
       "Worked with backend engineers to integrate APIs seamlessly with the frontend.",
-      "Contributed to open-source projects that were used with the  ecosystem.",
+      "Contributed to open-source projects that were used with the ecosystem.",
+      "Designed and implemented RESTful APIs with Node.js, Express, and PostgreSQL databases.",
+      "Optimized application performance and database queries, reducing load times significantly.",
     ],
   },
   {
@@ -229,6 +231,8 @@ const expCards = [
       "Built cross-platform mobile apps using React Native, integrating with Appwrite's backend services.",
       "Improved app performance and user experience through code optimization and testing.",
       "Coordinated with the product team to implement features based on feedback.",
+      "Implemented native modules and custom animations for smooth, responsive user interfaces.",
+      "Deployed apps to App Store and Google Play, managing CI/CD pipelines and versioning.",
     ],
   },
    // 4. NEW - Senior React Native Developer @ Bolt (Ride-hailing Giant)
