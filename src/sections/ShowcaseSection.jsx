@@ -14,7 +14,7 @@ const projects = [
     img: "/images/Fleet.png",
     alt: "MESSOB-FMS Fleet Management System",
     category: "Web",
-    tags: ["React", "Node.js", "PostgreSQL", "Real-time"],
+    tags: ["React", "Python", "PostgreSQL", "Real-time"],
     featured: true,
     gradient: "linear-gradient(135deg, #0B4F9F 0%, #1E3A5F 100%)",
     priority: 1,
