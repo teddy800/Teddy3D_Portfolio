@@ -2551,7 +2551,8 @@ html.light-mode .back-to-top-btn:hover {
 /* Project links overlay in light mode */
 html.light-mode .project-links-overlay,
 html.light-mode .project-links-overlay-small {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.97), rgba(248, 249, 250, 0.95));
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(248, 249, 250, 0.2));
+  backdrop-filter: blur(2px);
 }
 
 html.light-mode .project-link-btn.github-btn {
