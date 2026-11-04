@@ -333,7 +333,7 @@ img[loading="lazy"] {
 
   .hero-text {
   @apply flex flex-col justify-center md:text-[60px] text-[30px] font-semibold relative z-10 pointer-events-none;
-  /* Enhanced text visibility over 3D background */
+  /* Enhanced text visibility over 3D background - DARK MODE ONLY */
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5),
                0 4px 16px rgba(0, 0, 0, 0.3);
   
@@ -346,6 +346,11 @@ img[loading="lazy"] {
     }
   }
 
+  /* Light mode - Remove all text shadows for crisp text */
+  html.light-mode .hero-text {
+    text-shadow: none !important;
+  }
+
   .hero-badge {
     @apply px-4 py-2 text-sm rounded-full bg-black-200 w-fit md:text-base text-nowrap;
     /* Enhanced visibility over 3D background */
@@ -356,6 +361,13 @@ img[loading="lazy"] {
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
+  /* Light mode - Crystal clear badge */
+  html.light-mode .hero-badge {
+    backdrop-filter: blur(0px) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    border: 1px solid rgba(8, 145, 178, 0.2) !important;
+  }
+
   /* Enhanced hero content visibility over 3D background */
   .hero-desc,
   .hero-cta {
@@ -363,6 +375,12 @@ img[loading="lazy"] {
     z-index: 20;
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5),
                  0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Light mode - Remove all text shadows for perfect clarity */
+  html.light-mode .hero-desc,
+  html.light-mode .hero-cta {
+    text-shadow: none !important;
   }
 
   .hero-stats {
@@ -376,6 +394,11 @@ img[loading="lazy"] {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     filter: drop-shadow(0 2px 8px rgba(34, 211, 238, 0.6));
+  }
+
+  /* Light mode - Remove gradient text shadow */
+  html.light-mode .gradient-text {
+    filter: none !important;
   }
 
   /* Hero section has relative positioning to contain the 3D background */
@@ -456,10 +479,11 @@ img[loading="lazy"] {
     }
   }
 
-  /* Light mode - remove dark overlays */
+  /* Light mode - remove dark overlays completely */
   html.light-mode .hero-image-container::before,
   html.light-mode .hero-image-container::after {
-    opacity: 0;
+    opacity: 0 !important;
+    display: none !important;
   }
 
   /* OUTSTANDING IMAGE WRAPPER - Perfect Sync with Dark Background */
@@ -557,9 +581,10 @@ img[loading="lazy"] {
       }
     }
 
-    /* Light mode - remove vignette */
+    /* Light mode - remove vignette and ALL blur effects */
     html.light-mode .hero-showcase-image::before {
-      opacity: 0;
+      opacity: 0 !important;
+      display: none;
     }
   }
 
@@ -587,10 +612,11 @@ img[loading="lazy"] {
     }
   }
 
-  /* Light mode - remove wrapper effects */
+  /* Light mode - remove wrapper effects completely */
   html.light-mode .hero-image-wrapper::before,
   html.light-mode .hero-image-wrapper::after {
-    opacity: 0;
+    opacity: 0 !important;
+    display: none !important;
   }
 
   .hero-showcase-image {
@@ -645,15 +671,17 @@ img[loading="lazy"] {
     }
   }
 
-  /* Light mode adjustments */
+  /* Light mode adjustments - CRYSTAL CLEAR */
   html.light-mode .hero-showcase-image {
-    /* Restore normal appearance in light mode */
-    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.15));
-    mix-blend-mode: normal;
+    /* Restore completely normal appearance in light mode */
+    filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.12)) !important;
+    mix-blend-mode: normal !important;
+    opacity: 1 !important;
     
     &:hover {
-      filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.25));
-      mix-blend-mode: normal;
+      filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.2)) !important;
+      mix-blend-mode: normal !important;
+      opacity: 1 !important;
       transform: scale(1.05) translateY(-10px);
     }
   }
