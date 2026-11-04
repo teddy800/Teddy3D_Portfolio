@@ -41,17 +41,9 @@ const Hero = memo(() => {
 
   return (
     <section id="hero" ref={sectionRef} className="relative overflow-x-hidden">
-      {/* Background */}
-      <div className="absolute top-0 left-0 z-10 pointer-events-none w-full h-full">
-        <img 
-          src="/images/bg.png" 
-          alt="" 
-          aria-hidden="true"
-          loading="eager"
-          fetchpriority="high"
-          decoding="async"
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-        />
+      {/* 3D Room Background - Full Coverage */}
+      <div className="hero-3d-background">
+        <HeroExperience />
       </div>
 
       <div className="hero-layout">
@@ -109,20 +101,19 @@ const Hero = memo(() => {
           </div>
         </header>
 
-        {/* RIGHT: 3D Model & Image */}
+        {/* RIGHT: Hero Image Only */}
         <figure className="hero-right-section">
-          <div className="hero-3d-layout">
-            <HeroExperience />
-          </div>
           <div className="hero-image-container">
-            <img 
-              src="/images/new.png" 
-              alt="Portfolio showcase" 
-              className="hero-showcase-image"
-              loading="eager"
-              fetchpriority="high"
-              decoding="async"
-            />
+            <div className="hero-image-wrapper">
+              <img 
+                src="/images/new.png" 
+                alt="Portfolio showcase" 
+                className="hero-showcase-image"
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
+              />
+            </div>
           </div>
         </figure>
       </div>
