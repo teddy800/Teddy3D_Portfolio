@@ -348,6 +348,92 @@ img[loading="lazy"] {
   }
 
   /* ============================================================
+     HERO SHOWCASE IMAGE - ADVANCED RESPONSIVE LAYOUT
+     ============================================================ */
+  .hero-right-section {
+    @apply relative w-full h-full flex items-center justify-center;
+  }
+
+  .hero-image-container {
+    @apply relative z-20 flex items-center justify-center;
+    @apply xl:w-[600px] xl:h-[600px] lg:w-[500px] lg:h-[500px] md:w-[450px] md:h-[450px] w-[320px] h-[320px];
+    @apply xl:absolute xl:right-10 xl:top-1/2 xl:-translate-y-1/2;
+    @apply mt-8 xl:mt-0;
+    
+    /* Advanced positioning for different breakpoints */
+    @media (min-width: 1280px) {
+      position: absolute;
+      right: 2.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    
+    @media (min-width: 1536px) {
+      right: 5rem;
+    }
+  }
+
+  .hero-showcase-image {
+    @apply w-full h-full object-contain;
+    @apply drop-shadow-2xl;
+    /* Advanced animations */
+    animation: heroImageFloat 6s ease-in-out infinite;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Smooth hover effect */
+    &:hover {
+      transform: scale(1.05) translateY(-10px);
+      filter: drop-shadow(0 30px 60px rgba(59, 130, 246, 0.5));
+    }
+    
+    /* Image quality optimization */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    
+    /* Subtle glow effect */
+    filter: drop-shadow(0 20px 40px rgba(59, 130, 246, 0.3));
+  }
+
+  /* Floating animation */
+  @keyframes heroImageFloat {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  /* Light mode adjustments */
+  html.light-mode .hero-showcase-image {
+    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.15));
+    
+    &:hover {
+      filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.25));
+    }
+  }
+
+  /* Responsive adjustments for mobile */
+  @media (max-width: 768px) {
+    .hero-image-container {
+      @apply mx-auto;
+    }
+    
+    .hero-showcase-image {
+      animation: heroImageFloatMobile 4s ease-in-out infinite;
+    }
+    
+    @keyframes heroImageFloatMobile {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+  }
+
+  /* ============================================================
      3D ROOM - HIDE IN LIGHT MODE (NOT SUITABLE FOR LIGHT MODE)
      ============================================================ */
   html.light-mode .hero-3d-layout {

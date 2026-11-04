@@ -109,10 +109,20 @@ const Hero = memo(() => {
           </div>
         </header>
 
-        {/* RIGHT: 3D Model */}
-        <figure>
+        {/* RIGHT: 3D Model & Image */}
+        <figure className="hero-right-section">
           <div className="hero-3d-layout">
             <HeroExperience />
+          </div>
+          <div className="hero-image-container">
+            <img 
+              src="/images/new.png" 
+              alt="Portfolio showcase" 
+              className="hero-showcase-image"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            />
           </div>
         </figure>
       </div>
