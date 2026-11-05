@@ -22,10 +22,14 @@ export default defineConfig({
         drop_console: true,
         drop_debugger: true,
         passes: 3,
-        pure_funcs: ['console.log', 'console.info', 'console.warn'],
+        pure_funcs: ['console.log', 'console.info', 'console.warn', 'console.debug'],
         pure_getters: true,
         unsafe: true,
         unsafe_methods: true,
+        unsafe_math: true,
+        unsafe_proto: true,
+        dead_code: true,
+        unused: true,
       },
       mangle: {
         properties: {
@@ -84,6 +88,17 @@ export default defineConfig({
           }
           return `assets/[name]-[hash][extname]`
         },
+        compact: true,
+        generatedCode: {
+          arrowFunctions: true,
+          constBindings: true,
+          objectShorthand: true,
+        },
+      },
+      treeshake: {
+        moduleSideEffects: false,
+        propertyReadSideEffects: false,
+        tryCatchDeoptimization: false,
       },
     },
   },

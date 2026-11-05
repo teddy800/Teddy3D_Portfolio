@@ -11,20 +11,24 @@ import Optimized3DCanvas, { useQualitySettings } from "../../Optimized3DCanvas";
 const HeroScene = memo(({ qualitySettings, isMobile, isTablet }) => {
   // Determine particle count based on quality
   const particleCount = qualitySettings?.particleCount || 
-    (isMobile ? 40 : isTablet ? 60 : 100);
+    (isMobile ? 30 : isTablet ? 50 : 80);
+
+  // Reduce particle updates on low-end devices
+  const particleUpdateRate = isMobile ? 2 : isTablet ? 1.5 : 1;
 
   return (
     <>
-      <ambientLight intensity={0.2} color="#1a1a40" />
+      <ambientLight intensity={0.15} color="#1a1a40" />
       <OrbitControls
         enablePan={false}
-        enableZoom={!isTablet}
+        enableZoom={false}
         maxDistance={20}
-        minDistance={5}
+        minDistance={8}
         minPolarAngle={Math.PI / 5}
         maxPolarAngle={Math.PI / 2}
         enableDamping
-        dampingFactor={0.05}
+        dampingFactor={0.08}
+        rotateSpeed={0.5}
         makeDefault
       />
 
@@ -32,21 +36,22 @@ const HeroScene = memo(({ qualitySettings, isMobile, isTablet }) => {
         <HeroLights />
         <Particles count={particleCount} />
         <group
-          scale={isMobile ? 0.6 : isTablet ? 0.8 : 1}
+          scale={isMobile ? 0.6 : isTablet ? 0.75 : 0.95}
           position={[0, -3.5, 0]}
           rotation={[0, -Math.PI / 4, 0]}
         >
           <Room />
         </group>
 
-        {/* Conditionally render post-processing based on device */}
-        {qualitySettings?.postProcessing && !isMobile && (
-          <EffectComposer multisampling={0}>
+        {/* Conditionally render post-processing based on device - ONLY high-end */}
+        {qualitySettings?.postProcessing && !isMobile && !isTablet && (
+          <EffectComposer multisampling={0} disableNormalPass>
             <Bloom
-              intensity={qualitySettings.bloomIntensity}
-              luminanceThreshold={0.7}
-              luminanceSmoothing={0.95}
+              intensity={0.3}
+              luminanceThreshold={0.8}
+              luminanceSmoothing={0.9}
               mipmapBlur
+              radius={0.6}
             />
           </EffectComposer>
         )}
@@ -62,14 +67,17 @@ const HeroExperience = memo(() => {
   const isTablet = useMediaQuery({ query: "(max-width: 1024px)" });
   const qualitySettings = useQualitySettings();
   const [isVisible, setIsVisible] = useState(true);
+  const [frameloop, setFrameloop] = useState('always');
 
   // Pause rendering when hero is out of view to save resources
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsVisible(entry.isIntersecting);
+        const visible = entry.isIntersecting;
+        setIsVisible(visible);
+        setFrameloop(visible ? 'always' : 'never');
       },
-      { threshold: 0.1 }
+      { threshold: 0.05, rootMargin: '50px' }
     );
 
     const heroElement = document.querySelector('#hero');
@@ -84,16 +92,39 @@ const HeroExperience = memo(() => {
     };
   }, []);
 
+  // Pause rendering when tab is hidden
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        setFrameloop('never');
+      } else if (isVisible) {
+        setFrameloop('always');
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [isVisible]);
+
   return (
     <Optimized3DCanvas
       camera={{
         position: [0, 0, 15],
         fov: 45,
+        near: 1,
+        far: 50,
       }}
-      shadows={qualitySettings?.shadows}
+      shadows={qualitySettings?.shadows && !isMobile}
       postProcessing={qualitySettings?.postProcessing}
-      frameloop={isVisible ? "always" : "never"}
+      frameloop={frameloop}
       className="w-full h-full"
+      gl={{
+        powerPreference: 'high-performance',
+        antialias: !isMobile,
+        stencil: false,
+        depth: true,
+      }}
+      dpr={isMobile ? [1, 1] : [1, Math.min(window.devicePixelRatio, 1.5)]}
     >
       <HeroScene 
         qualitySettings={qualitySettings}
