@@ -1507,7 +1507,7 @@ img[loading="lazy"] {
 
     input,
     textarea {
-      @apply w-full px-4 py-4 text-sm bg-blue-100 rounded-md md:text-base placeholder:text-blue-50;
+      @apply w-full px-4 py-4 text-sm bg-blue-100 rounded-md md:text-base placeholder:text-slate-600;
     }
 
     a {
