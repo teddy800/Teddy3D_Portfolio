@@ -1,11 +1,12 @@
 {
   "name": "three-d-portfolio-2025",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node scripts/update-version.js && vite build",
+    "build:quick": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "optimize:fonts": "node scripts/download-fonts.js",

@@ -17,6 +17,8 @@ export default defineConfig({
     minify: 'terser',
     modulePreload: { polyfill: true },
     cssTarget: 'chrome80',
+    // Add build timestamp for cache busting
+    assetsInlineLimit: 0,
     terserOptions: {
       compress: {
         drop_console: true,
