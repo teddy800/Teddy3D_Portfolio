@@ -440,6 +440,7 @@ img[loading="lazy"] {
     #fd5c79 62.83%,
     #6d45ce 92.91%
   );
+  display: none; /* Hidden - removes the vertical gradient line */
 }
 
 .gradient-edge:nth-of-type(1) {
