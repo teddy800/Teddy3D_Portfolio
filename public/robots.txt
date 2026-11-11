@@ -1,0 +1,32 @@
+# robots.txt for Tewodiros Fikadu Portfolio
+# https://tewodiros-portfolio.netlify.app/robots.txt
+
+User-agent: *
+Allow: /
+
+# Disallow access to admin or private files (if any)
+Disallow: /api/
+Disallow: /*.json$
+Disallow: /sw.js
+
+# Allow access to CSS and JS files for better rendering in search results
+Allow: /css/
+Allow: /js/
+Allow: /images/
+Allow: /models/
+
+# Sitemap location
+Sitemap: https://tewodiros-portfolio.netlify.app/sitemap.xml
+
+# Crawl-delay for respectful crawling (optional)
+Crawl-delay: 0
+
+# Specific bot instructions
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /

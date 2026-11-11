@@ -13,7 +13,7 @@ const PageLoader = memo(({ onComplete }) => {
   const [progress, setProgress] = useState(0);
   const [leaving, setLeaving]   = useState(false);
   const particles = useRef(
-    Array.from({ length: 18 }, (_, i) => ({
+    Array.from({ length: 18 }, () => ({
       left:  `${Math.random() * 100}%`,
       top:   `${Math.random() * 100}%`,
       animationDelay: `${Math.random() * 3}s`,

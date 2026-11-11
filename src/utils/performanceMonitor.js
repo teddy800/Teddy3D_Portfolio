@@ -16,7 +16,7 @@ export const detectDeviceCapabilities = () => {
   const capabilities = {
     // Hardware
     cores: navigator.hardwareConcurrency || 2,
-    memory: navigator.deviceMemory || 4, // GB
+    deviceMemory: navigator.deviceMemory || 4, // GB - renamed to avoid duplicate
     gpu: detectGPUTier(),
     
     // Network
@@ -66,7 +66,7 @@ const detectGPUTier = () => {
     
     // Low-end GPUs
     return 'low';
-  } catch (error) {
+  } catch {
     return 'mid';
   }
 };
@@ -79,7 +79,7 @@ const detectGPUTier = () => {
 const classifyDeviceTier = (capabilities) => {
   const score = 
     (capabilities.cores >= 8 ? 3 : capabilities.cores >= 4 ? 2 : 1) +
-    (capabilities.memory >= 8 ? 3 : capabilities.memory >= 4 ? 2 : 1) +
+    (capabilities.deviceMemory >= 8 ? 3 : capabilities.deviceMemory >= 4 ? 2 : 1) +
     (capabilities.gpu === 'high' ? 3 : capabilities.gpu === 'mid' ? 2 : 1) +
     (capabilities.width >= 1920 ? 2 : capabilities.width >= 1280 ? 1 : 0);
   
@@ -307,7 +307,7 @@ class PerformanceMonitor {
         });
         longTaskObserver.observe({ entryTypes: ['longtask'] });
         this.observers.push(longTaskObserver);
-      } catch (e) {
+      } catch {
         // longtask API not supported
       }
     }

@@ -1,6 +1,6 @@
 import { useRef, useCallback, memo } from "react";
 
-const GlowCard = memo(({ card, index, children }) => {
+const GlowCard = memo(({ card, children }) => {
   const cardRef = useRef(null);
 
   // Throttled to ~60fps — no angle calc on every pixel

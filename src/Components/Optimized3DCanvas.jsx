@@ -7,8 +7,7 @@ import { Canvas } from "@react-three/fiber";
 import { memo, useMemo, useEffect, useState } from "react";
 import { 
   detectDeviceCapabilities, 
-  getAdaptiveQualitySettings,
-  cleanupThreeResources 
+  getAdaptiveQualitySettings
 } from "../utils/performanceMonitor";
 
 /**
@@ -25,19 +24,16 @@ const Optimized3DCanvas = memo(({
   children, 
   camera = {}, 
   shadows = true,
-  postProcessing = true,
   frameloop = 'always',
   onCreated,
   className = '',
   ...rest 
 }) => {
-  const [deviceCapabilities, setDeviceCapabilities] = useState(null);
   const [qualitySettings, setQualitySettings] = useState(null);
 
   // Detect device capabilities on mount
   useEffect(() => {
     const capabilities = detectDeviceCapabilities();
-    setDeviceCapabilities(capabilities);
     
     const settings = getAdaptiveQualitySettings(capabilities.tier);
     setQualitySettings(settings);

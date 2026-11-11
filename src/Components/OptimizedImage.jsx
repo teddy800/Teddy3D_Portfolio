@@ -33,7 +33,10 @@ const OptimizedImage = memo(({
 
   // Intersection Observer for lazy loading
   useEffect(() => {
-    if (priority || !imgRef.current) return;
+    if (priority) return;
+    
+    const currentImg = imgRef.current;
+    if (!currentImg) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -49,11 +52,11 @@ const OptimizedImage = memo(({
       }
     );
 
-    observer.observe(imgRef.current);
+    observer.observe(currentImg);
 
     return () => {
-      if (imgRef.current) {
-        observer.unobserve(imgRef.current);
+      if (currentImg) {
+        observer.unobserve(currentImg);
       }
     };
   }, [src, priority]);
