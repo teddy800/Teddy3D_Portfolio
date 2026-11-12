@@ -13,40 +13,55 @@ export default defineConfig({
   ],
 
   build: {
-    target: 'esnext',
+    target: 'es2020',
     minify: 'terser',
     modulePreload: { polyfill: true },
-    cssTarget: 'chrome80',
+    cssTarget: 'chrome90',
     terserOptions: {
       compress: {
         drop_console: true,
         drop_debugger: true,
         passes: 3,
-        pure_funcs: ['console.log', 'console.info', 'console.warn'],
+        pure_funcs: ['console.log', 'console.info', 'console.warn', 'console.debug'],
         pure_getters: true,
         unsafe: true,
         unsafe_methods: true,
+        unsafe_arrows: true,
+        ecma: 2020,
+        module: true,
+        toplevel: true,
+        keep_fargs: false,
+        keep_infinity: true,
       },
       mangle: {
         properties: {
           regex: /^_/,
         },
+        toplevel: true,
+        safari10: true,
       },
       format: {
         comments: false,
+        ecma: 2020,
       },
     },
-    chunkSizeWarningLimit: 1500,
+    chunkSizeWarningLimit: 1000,
     cssCodeSplit: true,
     cssMinify: 'lightningcss',
     sourcemap: false,
     reportCompressedSize: false,
     rollupOptions: {
+      treeshake: {
+        moduleSideEffects: false,
+        propertyReadSideEffects: false,
+        tryCatchDeoptimization: false,
+      },
       output: {
+        experimentalMinChunkSize: 20000,
         manualChunks: (id) => {
           if (!id.includes('node_modules')) return
 
-          // GSAP — fully independent, no react/three deps
+          // GSAP — fully independent
           if (id.includes('/gsap/')) return 'vendor-gsap'
 
           // Framer Motion — independent
@@ -55,13 +70,15 @@ export default defineConfig({
           // Lenis — independent
           if (id.includes('/lenis/')) return 'vendor-lenis'
 
-          // Three.js + entire R3F ecosystem in ONE chunk to avoid cross-refs
+          // Split Three.js core from R3F for better caching
+          if (id.includes('/three/')) return 'vendor-three-core'
+
+          // React Three Fiber ecosystem
           if (
-            id.includes('/three/') ||
             id.includes('/@react-three/') ||
             id.includes('/postprocessing/') ||
-            id.includes('/react-responsive/')
-          ) return 'vendor-three'
+            id.includes('/three-stdlib/')
+          ) return 'vendor-r3f'
 
           // React core
           if (
@@ -69,20 +86,29 @@ export default defineConfig({
             id.includes('/react-dom/') ||
             id.includes('/scheduler/')
           ) return 'vendor-react'
+
+          // Other vendor deps
+          return 'vendor-common'
         },
         entryFileNames: 'js/[name]-[hash].js',
         chunkFileNames: 'js/[name]-[hash].js',
         assetFileNames: (assetInfo) => {
           const info = assetInfo.name.split('.')
           const ext = info[info.length - 1]
-          if (/png|jpe?g|gif|svg|webp|ico/.test(ext)) {
+          if (/png|jpe?g|gif|svg|webp|avif|ico/.test(ext)) {
             return `images/[name]-[hash][extname]`
           } else if (/woff|woff2|eot|ttf|otf/.test(ext)) {
-            return `fonts/[name]-[hash][extname]`
+            return `fonts/[name][extname]` // No hash for fonts to enable proper caching
           } else if (ext === 'css') {
             return `css/[name]-[hash][extname]`
           }
           return `assets/[name]-[hash][extname]`
+        },
+        compact: true,
+        generatedCode: {
+          arrowFunctions: true,
+          constBindings: true,
+          objectShorthand: true,
         },
       },
     },
@@ -92,6 +118,7 @@ export default defineConfig({
     include: [
       'react',
       'react-dom',
+      'react/jsx-runtime',
       'gsap',
       'lenis',
       'framer-motion',
@@ -103,8 +130,10 @@ export default defineConfig({
     ],
     exclude: ['@react-three/postprocessing'],
     esbuildOptions: {
-      target: 'esnext',
+      target: 'es2020',
       minify: true,
+      treeShaking: true,
+      legalComments: 'none',
     },
   },
 
@@ -123,5 +152,8 @@ export default defineConfig({
 
   preview: {
     port: 4173,
+    headers: {
+      'Cache-Control': 'public, max-age=31536000',
+    },
   },
 })

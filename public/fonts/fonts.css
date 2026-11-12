@@ -14,9 +14,7 @@
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: local('Inter Light'),
-       local('Inter-Light'),
-       url('/fonts/inter-v12-latin-300.woff2') format('woff2');
+  src: url('/fonts/inter-v12-latin-light.woff2') format('woff2');
 }
 
 /* Inter Regular (400) */
@@ -25,9 +23,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: local('Inter'),
-       local('Inter-Regular'),
-       url('/fonts/inter-v12-latin-regular.woff2') format('woff2');
+  src: url('/fonts/inter-v12-latin-regular.woff2') format('woff2');
 }
 
 /* Inter Medium (500) */
@@ -36,9 +32,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: local('Inter Medium'),
-       local('Inter-Medium'),
-       url('/fonts/inter-v12-latin-500.woff2') format('woff2');
+  src: url('/fonts/inter-v12-latin-medium.woff2') format('woff2');
 }
 
 /* Inter Semi-Bold (600) */
@@ -47,9 +41,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: local('Inter SemiBold'),
-       local('Inter-SemiBold'),
-       url('/fonts/inter-v12-latin-600.woff2') format('woff2');
+  src: url('/fonts/inter-v12-latin-semibold.woff2') format('woff2');
 }
 
 /* Inter Bold (700) */
@@ -58,9 +50,7 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: local('Inter Bold'),
-       local('Inter-Bold'),
-       url('/fonts/inter-v12-latin-700.woff2') format('woff2');
+  src: url('/fonts/inter-v12-latin-bold.woff2') format('woff2');
 }
 
 /* Inter Extra-Bold (800) */
@@ -69,9 +59,7 @@
   font-style: normal;
   font-weight: 800;
   font-display: swap;
-  src: local('Inter ExtraBold'),
-       local('Inter-ExtraBold'),
-       url('/fonts/inter-v12-latin-800.woff2') format('woff2');
+  src: url('/fonts/inter-v12-latin-extrabold.woff2') format('woff2');
 }
 
 /* Inter Black (900) */
@@ -80,9 +68,7 @@
   font-style: normal;
   font-weight: 900;
   font-display: swap;
-  src: local('Inter Black'),
-       local('Inter-Black'),
-       url('/fonts/inter-v12-latin-900.woff2') format('woff2');
+  src: url('/fonts/inter-v12-latin-black.woff2') format('woff2');
 }
 
 /* ============================================================
@@ -95,9 +81,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: local('Fira Code Regular'),
-       local('FiraCode-Regular'),
-       url('/fonts/fira-code-v21-latin-regular.woff2') format('woff2');
+  src: url('/fonts/fira-code-v12-latin-regular.woff2') format('woff2');
 }
 
 /* Fira Code Medium (500) */
@@ -106,9 +90,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: local('Fira Code Medium'),
-       local('FiraCode-Medium'),
-       url('/fonts/fira-code-v21-latin-500.woff2') format('woff2');
+  src: url('/fonts/fira-code-v12-latin-medium.woff2') format('woff2');
 }
 
 /* Fira Code Bold (700) */
@@ -117,9 +99,7 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: local('Fira Code Bold'),
-       local('FiraCode-Bold'),
-       url('/fonts/fira-code-v21-latin-700.woff2') format('woff2');
+  src: url('/fonts/fira-code-v12-latin-bold.woff2') format('woff2');
 }
 
 /* ============================================================
